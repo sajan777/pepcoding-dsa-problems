@@ -723,7 +723,7 @@ public class gtree{
     }
 
     public static int diameter = 0;
-    // Diameter of the gtree! (method 2) 0(n)
+    // Diameter of the gtree! (method 2) 0(n) Elegant approach
     public static int heightForDiameter(Node node){
         int maxHt = -1; //max Height
         int smaxHt = -1; //smax Height
