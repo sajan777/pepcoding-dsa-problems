@@ -1,0 +1,31 @@
+import java.util.*;
+
+// Find firstMax firstMin secondMax secondMin
+
+
+
+public class Main{
+    public static void main(String[] args){
+        int[] arr = {10,12,9,16,11,15,17};
+        int firstMax = arr[0];
+        int secondMax = firstMax;
+        int firstMin = arr[0];
+        int secondMin = firstMin;
+        
+        for(int i=1;i<arr.length;i++){
+            
+            if(arr[i]>firstMax){
+                secondMax = firstMax;
+                firstMax = arr[i];
+            }
+            if(arr[i]<firstMin){
+                secondMin = firstMin;
+                firstMin = arr[i];
+            }
+        }
+        System.out.println("firstMax: "+firstMax);
+        System.out.println("secondMax: "+secondMax);
+        System.out.println("firstMin: "+firstMin);
+        System.out.println("secondMin: "+secondMin);
+    }
+}

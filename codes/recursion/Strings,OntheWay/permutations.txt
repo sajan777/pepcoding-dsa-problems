@@ -1,0 +1,41 @@
+import java.util.*;
+
+
+public class permutation {
+    public static void main(String[] args){
+
+        ArrayList<String> permutations = getPermutations("abc");
+        System.out.println(permutations);
+        printPermutations("abc", "");
+    }
+    public static ArrayList<String> getPermutations(String str){
+        ArrayList<String> myres = new ArrayList<>();
+        if(str.length() == 0){
+            ArrayList<String> base = new ArrayList<>();
+            base.add("");
+            return base;
+        }
+        for(int i=0;i<str.length();i++){
+            char ch = str.charAt(i);
+            String roq = str.substring(0, i)+str.substring(i+1);
+            ArrayList<String> rres = getPermutations(roq);
+            for(String s:rres){
+                myres.add(ch+s);
+            }
+        } 
+        return myres;
+    }
+    public static void printPermutations(String str,String ans) {
+        if(str.length() == 0){
+            System.out.println(ans);
+            return;
+        }
+        
+        for(int i=0;i<str.length();i++){
+            char ch = str.charAt(i);
+            String ros = str.substring(0,i)+str.substring(i+1);
+            printPermutations(ros,ans+ch);
+        }
+        
+    }
+}

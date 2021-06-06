@@ -1,0 +1,63 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int[][] board = new int[n][n];
+        nqueen(board,0,0,0,"");
+    }
+
+    // public static int[][] dirs = {{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1}};
+    // optimized dirs
+    public static int[][] dirs = {{-1,0},{-1,1},{-1,-1}};
+    public static boolean isValidToPlace(int[][] board,int sr,int sc){
+        int radius = board.length;
+        for(int rad=1;rad<=radius;rad++){
+            for(int dir=0;dir<dirs.length;dir++){
+                int rr = sr + rad*dirs[dir][0];
+                int cc = sc + rad*dirs[dir][1];
+    
+                if(rr>=0 && rr<radius && cc>=0 && cc<radius){ 
+                    if(board[rr][cc] == 1) return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // qpsf -> queen placed so far
+    // asf -> answer so far
+    public static void nqueen(int[][] board,int sr,int sc,int qpsf,String asf){
+
+        if(sr == board.length){
+            if(qpsf == board.length)
+                System.out.println(asf+".");
+            return;
+        }
+        // Next column is valid
+        if(sc+1 < board[0].length){
+            // yes call if pos is valid
+            if(isValidToPlace(board,sr,sc) == true){
+                // mark the queen 
+                board[sr][sc] = 1;
+                nqueen(board, sr+1, 0, qpsf+1, asf+sr+"-"+sc+", ");
+                board[sr][sc] = 0;
+            }
+            // no call if pos is valid
+            nqueen(board, sr, sc+1, qpsf, asf);
+        }else{ // next column is invalid
+            // yes call if pos is valid
+            if(isValidToPlace(board,sr,sc) == true){
+                // mark the queen
+                board[sr][sc] = 1;
+                nqueen(board, sr+1, 0, qpsf+1, asf+sr+"-"+sc+", ");
+                board[sr][sc] = 0;
+            }
+            // no call if pos is valid
+            nqueen(board, sr+1, 0, qpsf, asf);
+        }
+    }
+}

@@ -1,0 +1,78 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+    public static int evaluateExp(int val1,int val2,char op){
+        if(op == '*') return val1*val2;
+        else if(op == '/') return val1/val2;
+        else if(op == '+') return val1+val2;
+        else if(op == '-') return val1-val2;
+        else return 0;
+    }
+    public static void prefixEvaluation(String str) {
+        Stack<Integer> vstack = new Stack<>();
+        for(int i=str.length()-1;i>=0;i--){
+            char ch = str.charAt(i);
+            if(ch == ' ') continue;
+            else if(ch >= '0' && ch<= '9'){
+                // operand
+                vstack.push((int)(ch-'0'));
+            }else{
+                int val2 = vstack.pop();
+                int val1 = vstack.pop();
+                char op = ch;
+                // as we are traversing from reverse so we have to do val2/val1 or val2-val1
+                int res = evaluateExp(val2, val1, op);
+                vstack.push(res);
+            }
+        }
+        System.out.println(vstack.pop());
+    }
+    public static void prefixToInfix(String str) {
+        Stack<String> vstack = new Stack<>();
+        for(int i=str.length()-1;i>=0;i--){
+            char ch = str.charAt(i);
+            if(ch == ' ') continue;
+            else if(ch >= '0' && ch<= '9'){
+                // operand
+                vstack.push(ch+"");
+            }else{
+                String val1 = vstack.pop();
+                String val2 = vstack.pop();
+                char op = ch;
+                String res = "("+val1+op+val2+")";
+                vstack.push(res);
+            }
+        }
+        System.out.println(vstack.pop());
+    }
+
+    public static void prefixToPostfix(String str) {
+        Stack<String> vstack = new Stack<>();
+        for(int i=str.length()-1;i>=0;i--){
+            char ch = str.charAt(i);
+            if(ch == ' ') continue;
+            else if(ch >= '0' && ch<= '9'){
+                // operand
+                vstack.push(ch+"");
+            }else{
+                String val1 = vstack.pop();
+                String val2 = vstack.pop();
+                char op = ch;
+                String res = val1+val2+op;
+                vstack.push(res);
+            }
+        }
+        System.out.println(vstack.pop());
+
+    }
+
+public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String exp = br.readLine();
+
+    prefixEvaluation(exp);
+    prefixToInfix(exp);
+    prefixToPostfix(exp);
+ }
+}

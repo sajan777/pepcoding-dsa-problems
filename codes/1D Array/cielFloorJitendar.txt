@@ -1,0 +1,38 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+
+public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = scn.nextInt();
+        }
+        int el = scn.nextInt();
+        bs(arr,el);
+    }
+    public static void bs(int[] arr,int el){
+        int ciel = -1;
+        int floor = -1;
+        int left = 0;
+        int right = arr.length-1;
+        while(left<=right){
+            int mid = (left+right)/2;
+            if(arr[mid] == el){
+                System.out.println(el);
+                System.out.println(el);
+                return;
+            }else if(arr[mid] < el){
+                floor = arr[mid];
+                left = mid+1;
+            }else{
+                ciel = arr[mid];
+                right = mid-1;
+            }
+        }
+        System.out.println(ciel);
+        System.out.println(floor);
+    }
+}

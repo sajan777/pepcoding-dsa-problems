@@ -1,0 +1,77 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+  
+    public static int evaluateExp(int val1,int val2,char op){
+        if(op == '*') return val1*val2;
+        else if(op == '/') return val1/val2;
+        else if(op == '+') return val1+val2;
+        else if(op == '-') return val1-val2;
+        else return 0;
+    }
+    public static void postfixEvaluation(String str) {
+        Stack<Integer> vstack = new Stack<>();
+        for(int i=0;i<str.length();i++){
+            char ch = str.charAt(i);
+            if(ch == ' ') continue;
+            else if(ch >= '0' && ch<= '9'){
+                // operand
+                vstack.push((int)(ch-'0'));
+            }else{
+                int val2 = vstack.pop();
+                int val1 = vstack.pop();
+                char op = ch;
+                int res = evaluateExp(val1, val2, op);
+                vstack.push(res);
+            }
+        }
+        System.out.println(vstack.pop());
+    }
+    public static void postfixToPrefix(String str) {
+        Stack<String> vstack = new Stack<>();
+        for(int i=0;i<str.length();i++){
+            char ch = str.charAt(i);
+            if(ch == ' ') continue;
+            else if(ch >= '0' && ch<= '9'){
+                // operand
+                vstack.push(ch+"");
+            }else{
+                String val2 = vstack.pop();
+                String val1 = vstack.pop();
+                char op = ch;
+                String res = op+val1+val2;
+                vstack.push(res);
+            }
+        }
+        System.out.println(vstack.pop());
+
+    }
+    public static void postfixToinfix(String str) {
+        Stack<String> vstack = new Stack<>();
+        for(int i=0;i<str.length();i++){
+            char ch = str.charAt(i);
+            if(ch == ' ') continue;
+            else if(ch >= '0' && ch<= '9'){
+                // operand
+                vstack.push(ch+"");
+            }else{
+                String val2 = vstack.pop();
+                String val1 = vstack.pop();
+                char op = ch;
+                String res = "("+val1+op+val2+")";
+                vstack.push(res);
+            }
+        }
+        System.out.println(vstack.pop());
+
+    }
+public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String exp = br.readLine();
+
+    postfixEvaluation(exp);
+    postfixToinfix(exp);
+    postfixToPrefix(exp);
+ }
+}

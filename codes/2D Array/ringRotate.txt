@@ -1,0 +1,135 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static Scanner scn = new Scanner(System.in);
+    public static void main(String[] args) throws Exception {
+        int r = scn.nextInt();
+        int c = scn.nextInt();
+        int[][] arr = new int[r][c];
+        takeInput(arr);
+        int shell = scn.nextInt();
+        int rotations = scn.nextInt();
+        ringRotate(arr,shell,rotations);
+    }
+    public static void ringRotate(int[][] arr,int s,int r){
+        
+        int[] la = fill1Dfrom2D(arr,s);
+        rotate1D(la,r);
+        fill2Dfrom1D(arr,la,s);
+        display(arr);
+    }
+    public static int[] fill1Dfrom2D(int[][] arr,int s){
+       int rmin = s-1;
+       int rmax = arr.length-s;
+       int cmin = s-1;
+       int cmax = arr[0].length-s;
+    //   int total = 2*(rmax-rmin+1)+2*(cmax-cmin+1)-4;
+       int total = 2*(rmax-rmin+cmax-cmin);
+       int[] la = new int[total];   
+       int idx = 0; 
+       
+        // left wall
+        for(int r=rmin;r<=rmax;r++){
+            la[idx] = arr[r][cmin];
+            idx++;
+            
+        }
+        cmin++;
+        
+        // bottom wall
+        for(int c=cmin;c<=cmax;c++){
+            la[idx] = arr[rmax][c];
+            idx++;
+        }
+        rmax--;
+        
+        
+        //right wall
+        for(int r=rmax;r>=rmin;r--){
+            la[idx] = arr[r][cmax];
+            idx++;
+        }
+        cmax--;
+        
+        
+        // top wall
+        for(int c=cmax;c>=cmin;c--){
+            la[idx] = arr[rmin][c];
+            idx++;
+        }
+        rmin++;
+       return la;
+    }
+    public static void rotate1D(int[] a,int r){
+        int s = a.length;
+        r = r%s;
+        if(r<0){
+            r = r+s;
+        }
+        rev(a,0,s-r-1);
+        rev(a,s-r,s-1);
+        rev(a,0,s-1);
+    }
+    public static void rev(int[] arr,int i,int j){
+        while(i<j){
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;
+            j--;
+        }
+    }
+    
+    public static void fill2Dfrom1D(int[][] arr,int[] la,int s){
+        int rmin = s-1;
+        int rmax = arr.length-s;
+        int cmin = s-1;
+        int cmax = arr[0].length-s;
+        int idx = 0;
+         // left wall
+         for(int r=rmin;r<=rmax;r++){
+              arr[r][cmin] = la[idx];
+              idx++;
+         }
+         cmin++;
+         // bottom wall
+         for(int c=cmin;c<=cmax;c++){
+            arr[rmax][c] =la[idx];
+            idx++;
+         }
+         rmax--;
+         //right wall
+         for(int r=rmax;r>=rmin;r--){
+             arr[r][cmax] = la[idx];
+             idx++;
+         }
+         cmax--;
+         // top wall
+         for(int c=cmax;c>=cmin;c--){
+            arr[rmin][c] =  la[idx];
+            idx++;
+         }
+         rmin++;
+
+    }
+    
+    public static void takeInput(int[][] arr){
+        for(int r=0;r<arr.length;r++){
+            for(int c=0;c<arr[0].length;c++){
+                arr[r][c] = scn.nextInt();
+            }
+        } 
+    }
+    
+    
+    public static void display(int[][] arr){
+        for(int i = 0; i < arr.length; i++){
+            for(int j = 0; j < arr[0].length; j++){
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+}

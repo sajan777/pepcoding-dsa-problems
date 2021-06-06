@@ -1,0 +1,58 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static Scanner scn = new Scanner(System.in);
+    public static void main(String[] args) throws Exception {
+        
+        int n = scn.nextInt();
+        int[][] arr = new int[n][n];
+        takeInput(arr);
+        transpose(arr);
+        swap(arr);
+        display(arr);
+    }
+    public static void transpose(int[][] arr){
+        for(int i=0;i<arr.length-1;i++){
+            for(int j=i+1;j<arr.length;j++){
+                int temp = arr[i][j];
+                arr[i][j] = arr[j][i];
+                arr[j][i] = temp;
+            }
+        }
+        
+    }
+    public static void swap(int[][] arr){
+        int left = 0;
+        int right = arr[0].length-1;
+        while(left<right){
+            for(int rows=0;rows<arr.length;rows++){
+              int temp = arr[rows][left];
+              arr[rows][left] = arr[rows][right];
+              arr[rows][right] = temp;
+            }
+            left++;
+            right--;
+        }
+        
+    }
+
+    public static void display(int[][] arr){
+        for(int i = 0; i < arr.length; i++){
+            for(int j = 0; j < arr[0].length; j++){
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+    public static void takeInput(int[][] arr){
+        for(int r=0;r<arr.length;r++){
+            for(int c=0;c<arr[0].length;c++){
+                arr[r][c] = scn.nextInt();
+            }
+        } 
+    }
+
+}
+
+O(n2) w/o space this approach;

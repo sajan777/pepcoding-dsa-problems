@@ -1,0 +1,42 @@
+import java.util.*;
+  
+  public class Main{
+  
+  public static void main(String[] args) {
+      Scanner scn = new Scanner(System.in);
+      int b = scn.nextInt();
+      int n1 = scn.nextInt();
+      int n2 = scn.nextInt();
+  
+      int d = getDifference(b, n1, n2);
+      System.out.println(d);
+   }
+  
+   public static int getDifference(int b, int n1, int n2){
+       // write your code here
+       int counter = 0;
+       int borrow = 0;
+       int ans = 0;
+       while(n2 > 0){
+           int n1Last = n1%10;
+           int n2Last = n2%10;
+           int diff = (n2Last-borrow) - n1Last;
+          int power = (int)Math.pow(10,counter);
+           
+           if(diff >= 0){
+            ans = ans+diff*power;    
+           borrow = 0;
+               
+           }else{
+               borrow = 1;
+               int x = diff+b;
+               ans = ans+x*power;
+           }
+           n1/=10;
+           n2/=10;
+           counter++;
+       }
+       return ans;
+   }
+  
+  }

@@ -1,0 +1,48 @@
+import java.util.*;
+
+public class Main{
+
+public static void main(String[] args) {
+    Scanner scn = new Scanner(System.in);
+    int n = scn.nextInt();
+    int star = 1;
+    int space = 2*n-3;
+    int counter = 1;
+    
+    for(int rows=1;rows<=n;rows++){
+        
+        for(int st=1;st<=star;st++){
+            System.out.print(st+"\t");
+        }
+        
+        for(int sp=1;sp<=space;sp++){
+            System.out.print("\t");
+        }
+        if(rows == n){
+            star--;
+        }
+        
+        for(int st=star;st>=1;st--){
+            System.out.print(st+"\t");
+        }
+        star+=1;
+        space-=2;
+        counter++;
+        
+        System.out.println();
+    }
+    
+    
+    
+     // write ur code here
+
+ }
+}
+
+1												1	
+1	2										2	1	
+1	2	3								3	2	1	
+1	2	3	4						4	3	2	1	
+1	2	3	4	5				5	4	3	2	1	
+1	2	3	4	5	6		6	5	4	3	2	1	
+1	2	3	4	5	6	7	6	5	4	3	2	1	

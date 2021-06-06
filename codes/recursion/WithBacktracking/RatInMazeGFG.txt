@@ -1,0 +1,30 @@
+    public static int[][] dirs= {{1,0},{0,-1},{0,1},{-1,0}};
+    public static String[] dir = {"D","L","R","U"};
+     
+    public static void mazePath(int[][] maze,String ans,ArrayList<String> res,int sr,int sc){
+        
+        if(sr == maze.length-1 && sc == maze[0].length-1){
+            res.add(ans+"");
+            return;
+        }
+        
+        maze[sr][sc] = 0;
+        
+        for(int d=0;d<dirs.length;d++){
+            int rr = sr+dirs[d][0];
+            int cc = sc+dirs[d][1];
+            
+            if(rr>=0 && cc>=0 && rr<maze.length && cc<maze[0].length && maze[rr][cc] == 1){
+                mazePath(maze,ans+dir[d],res,rr,cc);
+            }
+        }
+        maze[sr][sc] = 1;
+    } 
+     
+     
+    public static ArrayList<String> findPath(int[][] m, int n) {
+        if(m[0][0] == 0 || m.length == 0 || m[0].length == 0) return new ArrayList<>();
+        ArrayList<String> ans = new ArrayList<>();
+        mazePath(m,"",ans,0,0);
+        return ans;
+    }

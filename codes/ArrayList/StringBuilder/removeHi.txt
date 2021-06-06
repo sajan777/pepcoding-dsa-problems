@@ -1,0 +1,50 @@
+import java.io.*;
+import java.util.*;
+
+public class App {
+
+    public static void main(String[] args) throws Exception {
+        String s = "hihiiiiihhhihihiiihiihi";
+        String s1  = "hihihit";
+        // "iiiihhiii";
+        String ans = removeHi(s);
+        String hit = removeNonHitHi(s1);
+        System.out.println(ans);
+        System.out.println(hit);
+    }
+
+    public static String removeHi(String s){
+        StringBuilder ans = new StringBuilder();
+        int i = 0;
+        int count = 0;
+        while(i<s.length()){
+            if(i<s.length()-1 && s.charAt(i) =='h' && s.charAt(i+1) == 'i'){
+                i+=2;
+                count++;
+                continue;
+            }
+            ans.append(s.charAt(i));
+            i++;
+        }
+        System.out.println(count);
+        return ans.toString();
+    }
+
+    public static String removeNonHitHi(String s){
+        StringBuilder ans = new StringBuilder();
+        int i = 0;
+        while(i<s.length()){
+            if(i<s.length()-1 && s.charAt(i) =='h' && s.charAt(i+1) == 'i'){
+                if(i<s.length()-2 && s.charAt(i) =='h' && s.charAt(i+1) == 'i' && s.charAt(i+2) == 't'){
+                    ans.append("hit");
+                    i+=3;
+                }else{
+                    i+=2;
+                }
+                continue;
+            }
+            ans.append(s.charAt(i++));
+        }
+        return ans.toString();
+    }
+}

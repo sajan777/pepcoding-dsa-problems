@@ -1,0 +1,80 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        String str = scn.nextLine();
+        System.out.println(isBalanced2(str));
+
+    }
+    public static boolean isBalanced2(String str){
+        Stack<Character> st = new Stack<>();
+        for(int i =0 ;i<str.length();i++){
+            char ch = str.charAt(i);
+
+            if(ch == ')'){
+                if(st.size()>0 && st.peek() == '(' ){
+                    st.pop();
+                }else{
+                    return false;
+                }
+            }else if(ch == ']'){
+                if(st.size()>0 && st.peek() == '['){
+                    st.pop();
+                }else{
+                    return false;
+                }
+            }else if(ch == '}'){
+                if(st.size()>0 && st.peek() == '{'){
+                    st.pop();
+                }else{
+                    return false;
+                }
+            }
+            if(ch =='[' || ch == '(' || ch == '{'){
+                st.push(ch);
+            }
+        }
+        
+        return st.size() == 0;
+
+    }
+    public static boolean isBalanced(String str){
+        Stack<Character> st = new Stack<>();
+        for(int i =0 ;i<str.length();i++){
+            char ch = str.charAt(i);
+            if(ch == ')'){
+                if(st.size()>0 && st.peek() == '(' ){
+                    st.pop();
+                }else{
+                    return false;
+                }
+            }else if(ch == ']'){
+                if(st.size()>0 && st.peek() == '['){
+                    st.pop();
+                }else{
+                    return false;
+                }
+            }else if(ch == '}'){
+                if(st.size()>0 && st.peek() == '{'){
+                    st.pop();
+                }else{
+                    return false;
+                }
+            }
+            if(ch =='[' || ch == '(' || ch == '{'){
+                st.push(ch);
+            }
+        }
+        
+        if(st.size() == 0){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+}

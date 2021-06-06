@@ -1,0 +1,110 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+      public static int priority(char op){
+        if(op == '/' || op == '*') return 2;
+        else if(op == '+' || op == '-') return 1;
+        else return 0;
+    }
+    public static void infixToPostfix(String str) {
+        Stack<Character> ostack = new Stack<>(); //operator stack
+        Stack<String> vstack = new Stack<>(); //operand stack
+        for(int i=0;i<str.length();i++){
+            char ch = str.charAt(i);
+            if(ch == ' ') continue;
+            else if(ch >= 'a' && ch<= 'z'){
+                // operand
+                vstack.push(""+ch);
+            }else if(ch == '('){
+                ostack.push(ch);
+            }else if(ch == ')'){
+                while(ostack.peek() != '('){
+                    String val2 = vstack.pop();
+                    String val1 = vstack.pop();
+                    char op = ostack.pop();
+
+                    String res = val1+val2+op;
+                    vstack.push(res);
+                }
+                ostack.pop();
+            }else{
+                // operator (Solve for equal priority now as well otherwise it will from right to left dir because of behaviour of stack)
+                while(ostack.size()>0 && ostack.peek() != '(' && priority(ostack.peek()) >= priority(ch)){
+                    String val2 = vstack.pop();
+                    String val1 = vstack.pop();
+                    char op = ostack.pop();
+
+                    String res = val1+val2+op;
+                    vstack.push(res);
+                }
+                ostack.push(ch);
+            }
+           
+        }
+        // some element may be present in staks
+        while(ostack.size()>0){
+            String val2 = vstack.pop();
+            String val1 = vstack.pop();
+            char op = ostack.pop();
+
+            String res = val1+val2+op;
+            vstack.push(res);
+        }
+        System.out.println(vstack.pop());
+    }
+    public static void infixToPrefix(String str) {
+        Stack<Character> ostack = new Stack<>(); //operator stack
+        Stack<String> vstack = new Stack<>(); //operand stack
+        for(int i=0;i<str.length();i++){
+            char ch = str.charAt(i);
+            if(ch == ' ') continue;
+            else if(ch >= 'a' && ch<= 'z'){
+                // operand
+                vstack.push(""+ch);
+            }else if(ch == '('){
+                ostack.push(ch);
+            }else if(ch == ')'){
+                while(ostack.peek() != '('){
+                    String val2 = vstack.pop();
+                    String val1 = vstack.pop();
+                    char op = ostack.pop();
+
+                    String res = op+val1+val2;
+                    vstack.push(res);
+                }
+                ostack.pop();
+            }else{
+                // operator (Solve for equal priority now as well otherwise it will from right to left dir because of behaviour of stack)
+                while(ostack.size()>0 && ostack.peek() != '(' && priority(ostack.peek()) >= priority(ch)){
+                    String val2 = vstack.pop();
+                    String val1 = vstack.pop();
+                    char op = ostack.pop();
+
+                    String res = op+val1+val2;
+                    vstack.push(res);
+                }
+                ostack.push(ch);
+            }
+           
+        }
+        // some element may be present in staks
+        while(ostack.size()>0){
+            String val2 = vstack.pop();
+            String val1 = vstack.pop();
+            char op = ostack.pop();
+
+            String res = op+val1+val2;
+            vstack.push(res);
+        }
+        System.out.println(vstack.pop());
+    }
+
+public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String exp = br.readLine();
+
+    infixToPostfix(exp);
+    infixToPrefix(exp);
+ }
+}

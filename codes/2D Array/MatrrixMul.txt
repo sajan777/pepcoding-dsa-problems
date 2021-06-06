@@ -1,0 +1,64 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+    
+public static Scanner scn = new Scanner(System.in);
+public static void main(String[] args) throws Exception {
+    
+    int r1 = scn.nextInt();
+    int c1 = scn.nextInt();
+    int[][] mat1 = new int[r1][c1];
+    takeInput(mat1);
+    
+    int r2 = scn.nextInt();
+    int c2 = scn.nextInt();
+    int[][] mat2 = new int[r2][c2];
+    takeInput(mat2);
+    
+    MatrixMultiplication(mat1,mat2);
+     
+ }
+ public static void MatrixMultiplication(int[][] mat1,int[][] mat2){
+    int r1 = mat1.length;
+    int c1 = mat1[0].length;
+    int r2 = mat2.length;
+    int c2 = mat2[0].length;
+    if(c1 != r2){
+        // multiplication not possible
+        System.out.println("Invalid input");
+        return;
+    }
+    int[][] res = new int[r1][c2];
+    for(int i=0;i<res.length;i++){
+        for(int j=0;j<res[0].length;j++){
+            // here i havbe to fgill i,j
+            // ith riow for mat1 and jth col for mat2 is fixed
+            int mul = 0;
+            for(int k=0;k<c1;k++){
+                mul+= mat1[i][k] * mat2[k][j];
+            }
+            res[i][j] = mul;
+            
+        }
+    }
+    display(res);
+ }
+ public static void display(int[][] arr){
+    for(int r=0;r<arr.length;r++){
+        for(int c=0;c<arr[0].length;c++){
+         System.out.print(arr[r][c] +" ");
+        }
+        System.out.println();
+    }
+ }
+ 
+ public static void takeInput(int[][] arr){
+    for(int r=0;r<arr.length;r++){
+         for(int c=0;c<arr[0].length;c++){
+             arr[r][c] = scn.nextInt();
+        }
+    } 
+ }
+
+}

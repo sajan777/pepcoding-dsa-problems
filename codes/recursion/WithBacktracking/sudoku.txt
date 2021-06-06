@@ -1,0 +1,139 @@
+        public static boolean isSafeToPlace(char[][] board,int r,int c,char n){
+            // row check
+            for(int col=0;col<board[0].length;col++){
+                if(board[r][col] == n) return false;
+            }
+            // col check
+            for(int row=0;row<board.length;row++){
+                if(board[row][c] == n) return false;
+            }
+           // sub matrix check
+            int rr = r-r%3;
+            int cc = c-c%3;         
+            for(int row=0;row<3;row++){
+                for(int col=0;col<3;col++){
+                    if(board[row + rr][col + cc] == n) return false;
+                }
+            }
+            return true;
+        }
+        public void solve(char[][] board,int r,int c,char[][] ans){
+            if(r == board.length){
+                for(int i=0;i<board.length;i++){
+                    for(int j=0;j<board.length;j++){
+                        ans[i][j] = board[i][j];
+                    }
+                }
+                return;
+            }
+            if(c == board[0].length){
+                solve(board,r+1,0,ans);
+                return;
+            }
+            if(board[r][c] == '.'){
+                for (char num = '1'; num <= '9'; num++) {
+                    if(isSafeToPlace(board, r, c, num) == true) {
+                        board[r][c] = num;
+                        solve(board, r,c+1,ans);
+                        board[r][c] = '.';
+                    }
+                }
+            }else{
+                solve(board,r,c+1,ans);
+            }
+        }
+        public void solveSudoku(char[][] board) {
+            char[][] ans = new char[board.length][board.length];
+            solve(board,0,0,ans);
+            for(int i=0;i<board.length;i++){
+                    for(int j=0;j<board.length;j++){
+                        board[i][j] = ans[i][j];
+                    }
+            }
+        }
+
+
+
+
+{% comment %} GFG {% endcomment %}
+
+
+
+class Solution{
+    
+    public static boolean isSafeToPlace(int[][] board,int r,int c,int n){
+            // row check
+            for(int col=0;col<board[0].length;col++){
+                if(board[r][col] == n) return false;
+            }
+            // col check
+            for(int row=0;row<board.length;row++){
+                if(board[row][c] == n) return false;
+            }
+           // sub matrix check
+            int rr = r-r%3;
+            int cc = c-c%3;
+            for(int row=0;row<3;row++){
+                for(int col=0;col<3;col++){
+                    if(board[row + rr][col + cc] == n) return false;
+                }
+            }
+            return true;
+    }
+    public static void solve(int[][] board,int r,int c,int[][] ans){
+        if(r == board.length){
+            for(int i=0;i<board.length;i++){
+                for(int j=0;j<board[0].length;j++){
+                    ans[i][j] = board[i][j];
+                }
+            }
+            return;
+        }
+        
+        
+        if(c == board[0].length){
+            solve(board,r+1,0,ans);
+            return;
+        }
+        if(board[r][c] == 0){
+            for(int i=1;i<10;i++){
+                if(isSafeToPlace(board,r,c,i) == true){
+                    board[r][c] = i;
+                    solve(board,r,c+1,ans);
+                     board[r][c] = 0;
+                    
+                }
+            }
+        }else{
+            solve(board,r,c+1,ans);
+        }
+    }
+    
+    //Function to find a solved Sudoku. 
+    public static boolean SolveSudoku(int grid[][])
+    {
+        int[][] ans = new int[grid.length][grid[0].length];
+        solve(grid,0,0,ans);
+        for(int i=0;i<ans.length;i++){
+            for(int j=0;j<ans[0].length;j++){
+                if(ans[i][j] == 0){
+                    return false;
+                }else{
+                    grid[i][j] = ans[i][j];
+                }
+            }
+        }
+        return true;
+    }
+    
+    //Function to print grids of the Sudoku.
+    public static void printGrid (int grid[][])
+    {
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                System.out.print(grid[i][j]+" ");
+            }
+            // System.out.println();
+        }
+    }
+}

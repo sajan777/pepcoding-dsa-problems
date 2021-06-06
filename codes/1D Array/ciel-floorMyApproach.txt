@@ -1,0 +1,49 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+
+public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = scn.nextInt();
+        }
+        int el = scn.nextInt();
+        int left = 0;
+        int right = n-1;
+        int idx = -1;
+        while(left<=right){
+            int mid = (left+right)/2;
+            if(arr[mid] == el){
+                idx = mid;
+                break;
+            }else if(arr[mid] < el){
+                left = mid+1;
+            }else{
+                right = mid-1;
+            }
+        }
+        if(idx>-1){
+            System.out.println(el);
+        }else{
+            bs(arr,left,right,el);
+        }
+    }
+    public static void bs(int[] arr,int left,int right,int el){
+        int idx = -1;
+        while(left<right){
+            int mid = (left+right)/2;
+            if(arr[mid] == el){
+                idx = mid;
+            }else if(arr[mid] < el){
+                left = mid+1;
+            }else{
+                right = mid-1;
+            }
+        }
+        System.out.println(arr[left]);
+        System.out.println(arr[right]);
+    }
+}

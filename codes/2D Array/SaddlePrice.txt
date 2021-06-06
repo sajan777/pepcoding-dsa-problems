@@ -1,0 +1,46 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static Scanner scn = new Scanner(System.in);
+    public static void main(String[] args) throws Exception {
+        int n = scn.nextInt();
+        int[][] arr = new int[n][n];
+        takeInput(arr);
+        saddlePrice(arr);
+    }
+    public static void saddlePrice(int[][] arr){
+        
+        for(int i=0;i<arr.length;i++){
+            int lj = 0;
+            for(int j=1;j<arr[0].length;j++){
+                if(arr[i][lj] > arr[i][j]){
+                    lj = j;
+                }
+            }
+            int saddleContender = arr[i][lj];
+            boolean isSaddle = true;
+            for(int k=0;k<arr.length;k++){
+                if(saddleContender < arr[k][lj]){
+                    isSaddle = false;
+                }
+            }
+            if(isSaddle == true){
+                System.out.println(saddleContender);
+                return;
+            }
+        }
+        System.out.println("Invalid input");
+        
+        
+    }
+    
+    public static void takeInput(int[][] arr){
+        for(int r=0;r<arr.length;r++){
+            for(int c=0;c<arr[0].length;c++){
+                arr[r][c] = scn.nextInt();
+            }
+        } 
+    }
+
+}

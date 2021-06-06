@@ -1,0 +1,51 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+  public static int findPivot(int[] arr,int low,int high) {
+    //   if(low == high){
+    //       return arr[low];
+    //   }
+    
+    // int mid = low+(high-low)/2;
+        
+    // int res = 0;
+    // if(arr[mid] < arr[high]){
+    //     // left side including mid
+    //     res = findPivot(arr,low,mid);
+    // }else{
+    //     // right
+    //   res = findPivot(arr,mid+1,high);
+    // }
+    
+    // return res;
+    
+    // iteratuve
+    while(low<high){
+        int mid = low+(high-low)/2;
+        if(arr[mid] < arr[high]){
+            high=mid;
+            // left side including mid
+        }else{
+            low = mid+1;
+            // right side
+        }
+    }
+    return arr[low];
+    
+    
+  }
+
+  public static void main(String[] args) throws Exception {
+    Scanner scn = new Scanner(System.in);
+    int n = scn.nextInt();
+    int[] arr = new int[n];
+    for (int i = 0; i < n; i++) {
+      arr[i] = scn.nextInt();
+    }
+    int pivot = findPivot(arr,0,arr.length-1);
+    System.out.println(pivot);
+  }
+
+}

@@ -1,0 +1,42 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int m = scn.nextInt();
+        int[][] dir = {{0,1},{1,0},{1,1}};
+        String[] dirs ={"h","v","d"};
+        int radius = Math.max(n,m);
+        ArrayList<String> ans = getMazePaths(0,0,n-1,m-1,dir,dirs,radius);
+        System.out.println(ans);
+    }
+
+    public static ArrayList<String> getMazePaths(int sr, int sc, int dr, int dc,int[][] dir,String[] dirs,int RAD) {
+        if(sr == dr && sc == dc){
+            ArrayList<String> base = new ArrayList<>();
+            base.add("");
+            return base;
+        }
+        ArrayList<String> myres = new ArrayList<>();
+        for(int d=0;d<dir.length;d++){
+            for(int rad=1;rad<=RAD;rad++){
+                int r = sr + rad*dir[d][0];
+                int c = sc + rad*dir[d][1];
+                if(r>=0 && c>=0 && r<=dr && c<=dc){
+                    ArrayList<String> rres = getMazePaths(r,c,dr,dc,dir,dirs,RAD);
+                    for(String s:hres){
+                        myres.add(dirs[d]+rad+s);
+                    }
+                }else{
+                    break;
+                }
+            }
+        }
+
+        return myres;
+    }
+
+}

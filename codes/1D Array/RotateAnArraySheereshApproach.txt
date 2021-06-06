@@ -1,0 +1,52 @@
+import java.io.*;
+import java.util.*;
+
+// Better Apprioach
+
+public class Main{
+  public static void display(int[] a){
+    StringBuilder sb = new StringBuilder();
+
+    for(int val: a){
+      sb.append(val + " ");
+    }
+    System.out.println(sb);
+  }
+
+  public static void rotate(int[] a, int k){
+    int s = a.length;
+    k = k%s;
+    if(k<0){
+        k = k+s;
+    }
+    rev(a,0,s-k-1);
+    rev(a,s-k,s-1);
+    rev(a,0,s-1);
+    
+    
+  }
+  public static void rev(int[] arr,int i,int j){
+      while(i<j){
+          int temp = arr[i];
+          arr[i] = arr[j];
+          arr[j] = temp;
+          i++;
+          j--;
+      }
+  }
+
+public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    int n = Integer.parseInt(br.readLine());
+    int[] a = new int[n];
+    for(int i = 0; i < n; i++){
+       a[i] = Integer.parseInt(br.readLine());
+    }
+    int k = Integer.parseInt(br.readLine());
+
+    rotate(a, k);
+    display(a);
+ }
+
+}

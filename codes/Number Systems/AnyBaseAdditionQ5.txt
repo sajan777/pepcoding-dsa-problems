@@ -1,0 +1,42 @@
+import java.util.*;
+  
+  public class Main{
+  
+  public static void main(String[] args) {
+      Scanner scn = new Scanner(System.in);
+      int b = scn.nextInt();
+      int n1 = scn.nextInt();
+      int n2 = scn.nextInt();
+  
+      int d = getSum(b, n1, n2);
+      System.out.println(d);
+   }
+  
+   public static int getSum(int b, int n1, int n2){
+       // write ur code here
+      int ans = 0;
+      int counter = 0;
+      int carry = 0;
+      while(n1>0 ||  n2>0 || carry>0){
+          
+          int n1Last = n1%10;
+          int n2Last = n2%10;
+          int total = n1Last+n2Last+carry;
+          carry = total/b;
+          int r  = total%b;
+          int mult = (int)Math.pow(10,counter);
+          ans = ans + r*mult;
+          
+          n1/=10;
+          n2/=10;
+          counter++;
+      }
+      return ans;
+   }
+  }
+
+  8
+777
+1
+
+1000

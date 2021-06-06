@@ -1,0 +1,55 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static Scanner scn = new Scanner(System.in);
+    public static void main(String[] args) throws Exception {
+        int n = scn.nextInt();
+        int[][] arr = new int[n][n];
+        takeInput(arr);
+        int x =  scn.nextInt();
+        searchIn2D(arr,x);
+    }
+    public static void takeInput(int[][] arr){
+        for(int r=0;r<arr.length;r++){
+            for(int c=0;c<arr[0].length;c++){
+                arr[r][c] = scn.nextInt();
+            }
+        } 
+    }
+    public static void searchIn2D(int[][] arr,int x){
+        int n =  arr.length;
+        // (start) from (n-1,0) lower left
+        int i = n-1; 
+        int j = 0;
+        while(i>=0 && j<n){
+            if(arr[i][j] == x){
+                System.out.println(i);
+                System.out.println(j);
+                return;
+            }else if(x < arr[i][j]){
+                i--;
+            }else{
+                j++;
+            }
+        }
+        
+        
+        // (start from (0,n-1)) upper right
+        // int i = 0;
+        // int j = n-1;
+        // while(j>=0 && i<n){
+        //     if(arr[i][j] == x){
+        //         System.out.println(i);
+        //         System.out.println(j);
+        //         return;
+        //     }else if(arr[i][j] < x){
+        //         i++;
+        //     }else{
+        //         j--;
+        //     }
+        // }
+        
+        System.out.println("Not Found");
+    }
+}

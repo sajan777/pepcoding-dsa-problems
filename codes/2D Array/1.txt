@@ -1,0 +1,31 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+public static Scanner scn = new Scanner(System.in);
+
+public static void main(String[] args) throws Exception {
+    int rows = scn.nextInt();
+    int cols = scn.nextInt();
+    int[][] arr = new int[rows][cols];
+    takeInput(arr,rows,cols);
+    display(arr,rows,cols);
+ }
+ public static void takeInput(int[][] arr,int rows,int cols){
+    for(int r=0;r<arr.length;r++){
+         for(int c=0;c<arr[0].length;c++){
+             arr[r][c] = scn.nextInt();
+         }
+     } 
+ }
+ 
+ public static void display(int[][] arr,int rows,int cols){
+    for(int r=0;r<arr.length;r++){
+        for(int c=0;c<arr[r].length;c++){
+         System.out.print(arr[r][c] +" ");
+        }
+        System.out.println();
+    }
+ }
+
+}

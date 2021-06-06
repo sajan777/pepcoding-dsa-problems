@@ -1,0 +1,33 @@
+import java.util.*;
+  
+  public class Main{
+  
+  public static void main(String[] args) {
+      Scanner scn = new Scanner(System.in);
+      int n = scn.nextInt();
+      int b = scn.nextInt();
+      int dn = getValueInBase(n, b);
+      System.out.println(dn);
+   }
+  
+   public static int getValueInBase(int n, int b){
+       // write code here
+       int counter = 0;
+       int temp = 1;
+       int ans = 0;
+       while(n>0){
+           
+           int rem = n%b;
+           temp = (int)Math.pow(10,counter);
+           ans += rem*temp;
+           n/=b;
+           counter++;
+       }
+       return ans;
+   }
+  }
+  i/p
+  57
+ 2
+ o/p
+ 111001

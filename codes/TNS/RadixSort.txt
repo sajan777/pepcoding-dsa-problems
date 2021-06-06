@@ -1,0 +1,74 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+  public static void radixSort(int[] arr) {
+    int exp = 1;
+    int maxVal = Integer.MIN_VALUE;
+    for(Integer val:arr){
+        if(val > maxVal){
+            maxVal = val;
+        }
+    } 
+    while(exp <= maxVal){
+        countSort(arr,exp);
+        exp*=10;
+    }    
+  }
+
+  public static void countSort(int[] arr, int exp) {
+    int[] fmap = new int[10];
+
+    for(int i=0;i<arr.length;i++){
+        int indx = (arr[i] / exp) % 10;     
+        fmap[indx]++;
+    }
+       
+    fmap[0]--;
+    for(int i=1;i<fmap.length;i++){
+        fmap[i]+=fmap[i-1];
+    }
+    
+    int[] narr = new int[arr.length];
+    for(int i=arr.length-1;i>=0;i--){
+        // val to place
+        int val = (arr[i] / exp) % 10;
+        // index in fmap
+        int indx = val;
+        // pos to place in the new arr
+        int pos = fmap[indx];
+        // place it
+        narr[pos] = arr[i];
+        // reduce the prefix sum
+        fmap[indx]--;
+    }
+    // 4.place it back in the same array
+    for(int i=0;i<narr.length;i++){
+        arr[i] = narr[i];
+    }
+        
+        
+    System.out.print("After sorting on " + exp + " place -> ");
+    print(arr);
+  }
+
+  public static void print(int[] arr) {
+    for (int i = 0; i < arr.length; i++) {
+      System.out.print(arr[i] + " ");
+    }
+    System.out.println();
+  }
+
+  public static void main(String[] args) throws Exception {
+    Scanner scn = new Scanner(System.in);
+    int n = scn.nextInt();
+    int[] arr = new int[n];
+    for (int i = 0; i < n; i++) {
+      arr[i] = scn.nextInt();
+    }
+    radixSort(arr);
+    print(arr);
+  }
+
+}

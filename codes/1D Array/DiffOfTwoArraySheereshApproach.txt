@@ -1,0 +1,59 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+
+public static void main(String[] args) throws Exception {
+   Scanner scn = new Scanner(System.in);
+    int n1 = scn.nextInt();
+    int[] arr1 = new int[n1];
+    for(int i=0;i<arr1.length;i++){
+        arr1[i] = scn.nextInt();
+    }
+    
+    int n2 = scn.nextInt();
+    int[] arr2 = new int[n2];
+    for(int p=0;p<arr2.length;p++){
+        arr2[p] = scn.nextInt();
+    }
+    
+    int n = n2;
+    int[] arr = new int[n];
+    int borrow = 0;
+    n1-=1;
+    n2-=1;
+    for(int k=arr.length-1;k>=0;k--){
+        int val1 = n1>=0 ? arr1[n1] : 0;
+        int val2 = n2>=0 ? arr2[n2] : 0;
+    
+        int total = (val2+borrow)-val1;
+        if(total<0){
+            total+=10;
+            borrow=-1;
+        }else{
+            borrow=0;
+        }
+        {% comment %} no need to mod {% endcomment %}
+        arr[k] = total;
+        n1-=1;
+        n2-=1;
+    }
+    boolean isLeading0=true;
+    for(int i=0;i<arr.length;i++){
+        if(arr[i] == 0){
+        //   zero case
+           if(isLeading0 == true){
+            //   nothing to do as we are on leading zero.
+           }else{
+               System.out.println(arr[i]);
+           } 
+        }else{
+            // non-zero milgya then leadingzero false and print.
+            isLeading0 =false;
+            System.out.println(arr[i]);
+        }
+        
+    }
+ }
+
+}

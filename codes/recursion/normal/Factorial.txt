@@ -1,0 +1,34 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        // expectation
+        int fact = factorial(n);
+        System.out.println(fact);
+    }
+    // 2nd Approach with storing
+    // public static int facto(int n){
+    //     // Base Case
+    //     if(n == 0){
+    //         return 1;
+    //     }
+
+    //     // faith
+    //     int fnm1 = facto(n-1);
+    //     // merging
+    //     int fn = fnm1*n;
+    //     return fn;
+    // }
+
+    public static int factorial(int n){
+        if(n == 0){
+            return 1;
+        }
+        return n*factorial(n-1);
+    }
+
+}

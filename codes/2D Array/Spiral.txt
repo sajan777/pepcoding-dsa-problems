@@ -1,0 +1,61 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+public static Scanner scn = new Scanner(System.in);
+    public static void main(String[] args) throws Exception {
+        int r = scn.nextInt();
+        int c = scn.nextInt();
+        int[][] mat = new int[r][c];
+        takeInput(mat);
+        printSpiral(mat);
+    }
+    
+    public static void takeInput(int[][] arr){
+        for(int r=0;r<arr.length;r++){
+            for(int c=0;c<arr[0].length;c++){
+                arr[r][c] = scn.nextInt();
+            }
+        } 
+    }
+    public static void printSpiral(int[][] arr){
+        int n = arr.length;
+        int m = arr[0].length;
+        int rmin = 0;
+        int rmax = n-1;
+        int cmin = 0;
+        int cmax = m-1;
+        int tele = n*m;
+        while(tele>0){
+            // left wall
+            for(int r=rmin;r<=rmax && tele>0;r++){
+                System.out.println(arr[r][cmin]);
+                tele--;
+            }
+            cmin++;
+            
+            // bottom wall
+            for(int c=cmin;c<=cmax && tele>0;c++){
+                System.out.println(arr[rmax][c]);
+                tele--;
+            }
+            rmax--;
+            
+            //right wall
+            for(int r=rmax;r>=rmin && tele>0;r--){
+                System.out.println(arr[r][cmax]);
+                tele--;
+            }
+            cmax--;
+            
+            
+            // top wall
+            for(int c=cmax;c>=cmin && tele>0;c--){
+                System.out.println(arr[rmin][c]);
+                tele--;
+            }
+            rmin++;
+        }
+    }
+
+}

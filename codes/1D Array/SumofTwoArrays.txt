@@ -1,0 +1,50 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+
+public static void main(String[] args) throws Exception {
+    // write your code here
+    Scanner scn = new Scanner(System.in);
+    int n1 = scn.nextInt();
+    int[] arr1 = new int[n1];
+    for(int i=0;i<arr1.length;i++){
+        arr1[i] = scn.nextInt();
+    }
+    
+    int n2 = scn.nextInt();
+    int[] arr2 = new int[n2];
+    for(int p=0;p<arr2.length;p++){
+        arr2[p] = scn.nextInt();
+    }
+    
+    int n = n1 > n2 ? n1 : n2;
+    int[] arr = new int[n];
+    int temp = n-1;
+    int carry = 0;
+    n1-=1;
+    n2-=1;
+    while(temp>=0){
+        int total = carry;
+        if(n1>=0){
+            total+=arr1[n1];
+        }
+        if(n2>=0){
+            total+=arr2[n2];
+        }
+        carry = total/10;
+        arr[temp] = total%10;
+        n1-=1;
+        n2-=1;
+        temp-=1;
+    }
+    if(carry>0){
+        System.out.println(carry);
+    }
+    for(int i=0;i<arr.length;i++){
+        System.out.println(arr[i]);
+    }
+    
+ }
+
+}

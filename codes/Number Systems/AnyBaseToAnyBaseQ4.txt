@@ -1,0 +1,43 @@
+import java.util.*;
+  
+  public class Main{
+  
+  public static void main(String[] args) {
+      Scanner scn = new Scanner(System.in);
+      int n = scn.nextInt();
+      int sourceBase = scn.nextInt();
+     int  destBase= scn.nextInt();
+    int dec = CoverToDecimal(n,sourceBase);
+    int ans  = CoverToDesired(dec,sourceBase,destBase);
+    System.out.println(ans);
+      
+  }
+   public static int CoverToDecimal(int n,int b){
+      int counter = 0;
+      int ans = 0;
+      int temp = 1;
+      while(n>0){
+          int rem = n%10;
+           temp = (int)Math.pow(b,counter);
+           ans += rem*temp;
+           counter++;
+           n/=10;
+      }
+      return ans;
+       
+   }
+   public static int CoverToDesired(int n,int s,int d){
+       
+       int counter = 0;
+       int temp = 1;
+       int ans = 0;
+       while(n>0){
+           int rem = n%d;
+           temp = (int)Math.pow(10,counter);
+           ans += rem*temp;
+           n/=d;
+           counter++;
+       }
+       return ans;
+   }
+  }

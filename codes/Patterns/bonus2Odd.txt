@@ -1,0 +1,32 @@
+import java.util.*;
+
+public class Main{
+
+public static void main(String[] args) {
+    Scanner scn = new Scanner(System.in);
+    int n = 5;
+    int init = 1;
+    
+    for(int rows=1;rows<=n;rows++){
+        int counter = 0;
+        for(int cols=1;cols<=n;cols++){
+            System.out.print(init+counter+"\t");
+            counter++;
+        }    
+        
+       System.out.println();
+       if(rows<=n/2){
+           init = init+2*n;
+       }else{
+           if(rows == n-1){
+            init = init-2*n;     
+           }else{
+               
+           init = init-n;
+           }
+       }
+        
+    }
+
+ }
+}

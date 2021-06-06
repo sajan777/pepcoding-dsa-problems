@@ -1,0 +1,61 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int m = scn.nextInt();
+        ArrayList<String> ans = getMazePaths(0,0,n-1,m-1);
+        System.out.println(ans);
+    }
+
+    // sr - source row
+    // sc - source column
+    // dr - destination row
+    // dc - destination column
+    public static ArrayList<String> getMazePaths(int sr, int sc, int dr, int dc) {
+       ArrayList<String> myres = new ArrayList<>();
+        
+        // stupid Base Case
+        if(sr == dr && sc==dc){
+            ArrayList<String> baseResult = new ArrayList<>();
+            baseResult.add("");
+            return baseResult;
+        }
+        
+        
+        // smart Base Case
+        // if(sr == dr && sc==dc){
+        //     ArrayList<String> baseResult = new ArrayList<>();
+        //     baseResult.add("");
+        //     return baseResult;
+        // }else if(sr>dr || sc>dr){
+        //     ArrayList<String> baseResult = new ArrayList<>();
+        //     return baseResult;
+        // }
+        
+        
+        //stupid calls smart baseCase    
+    //   ArrayList<String> hres = getMazePaths(sr,sc+1,dr,dc);
+    //   ArrayList<String> vres = getMazePaths(sr+1,sc,dr,dc);
+       
+    //   smart calls stupid baseCase
+       if(sc+1 <= dc){
+           ArrayList<String> hres = getMazePaths(sr,sc+1,dr,dc);
+            for(String s:hres){
+                myres.add("h" + s);
+            }
+       }
+       if(sr+1 <=  dr){
+           ArrayList<String> vres = getMazePaths(sr+1,sc,dr,dc);
+           for(String s:vres){
+                myres.add("v" + s);
+            }
+       }
+        return myres;
+       
+    }
+
+}

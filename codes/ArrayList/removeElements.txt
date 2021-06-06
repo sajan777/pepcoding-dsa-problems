@@ -1,0 +1,12 @@
+    public static void removeData(ArrayList<Integer> arr,int x){
+        int i  = arr.size()-1;
+        while(i>=0){
+            if(arr.get(i) == x){
+                int n = arr.size();
+                int lastEle = arr.get(n-1);
+                arr.set(i,lastEle);
+                arr.remove(n-1);
+            }
+            i--;
+        }
+    }

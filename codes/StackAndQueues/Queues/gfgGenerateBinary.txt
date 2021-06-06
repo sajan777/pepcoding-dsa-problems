@@ -1,0 +1,17 @@
+static ArrayList<String> generate(int N)
+    {
+        ArrayList<String> ans = new ArrayList<>();
+        Queue<String> qu = new ArrayDeque<>();
+        qu.add("1");
+        while(N-->0){
+            
+            String s1 = qu.remove();
+            ans.add(s1);
+            // qu.remove();
+            
+            qu.add(s1+"0");
+            qu.add(s1+"1");
+            
+        }
+        return ans;
+    }
