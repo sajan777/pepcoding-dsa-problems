@@ -711,11 +711,13 @@ public class btree {
         int min;
         int max;
         boolean isBST;
-        
+        int size;
+
         public BSTPair(){
             min = Integer.MAX_VALUE;
             max = Integer.MIN_VALUE;
             isBST = true;
+            size = 0;
         }
     }
 
@@ -764,6 +766,7 @@ public class btree {
 
         return Math.max(lht,rht)+1;
     }
+    
     public static class isBalancedPair{
         int ht;
         boolean isBalanced;
@@ -779,17 +782,53 @@ public class btree {
 
         isBalancedPair lht = isBalanced3(node.left);
         isBalancedPair rht = isBalanced3(node.right);
-        int balancedht = Math.abs(lht.ht - rht.ht);
         
+        // shreesh
+        boolean factor = Math.abs(lht.ht - rht.ht) >= 1;
         isBalancedPair mres = new isBalancedPair();
         mres.ht = Math.max(lht.ht,rht.ht)+1;
-        if(balancedht > 1 || lht.isBalanced == false || rht.isBalanced == false){
-            mres.isBalanced = false;
+        mres.isBalanced = factor && lht.isBalanced && rht.isBalanced;
+        
+        // my app
+        // int balancedht = Math.abs(lht.ht - rht.ht);
+        // isBalancedPair mres = new isBalancedPair();
+        // mres.ht = Math.max(lht.ht,rht.ht)+1;
+        // if(balancedht > 1 || lht.isBalanced == false || rht.isBalanced == false){
+        //     mres.isBalanced = false;
+        // }
+
+        return mres;
+    }
+
+
+    // largestBST
+    // 0(n)
+    static int sz = 0;
+    static Node bstNode = null;
+    public static BSTPair largestBSTSubtree(Node node){
+        if(node == null) return new BSTPair();
+
+        BSTPair lres = largestBSTSubtree(node.left);
+        BSTPair rres = largestBSTSubtree(node.right);
+
+
+        boolean status = lres.max < node.data && rres.min > node.data;
+        BSTPair mres = new BSTPair();
+        mres.min = Math.min(node.data,Math.min(lres.min,rres.min));
+        mres.max = Math.max(node.data,Math.max(lres.max,rres.max));
+        mres.isBST = lres.isBST && rres.isBST && status;
+        mres.size = lres.size + rres.size + 1;
+
+        if(mres.isBST == true && mres.size > sz){
+            bstNode = node;
+            sz = mres.size;
         }
 
         return mres;
     }
-    
+    // largestBSTSubtree(root);
+    // System.out.println(bstNode.data+"@"+sz);
+
     static ArrayList<Integer> pre;
     static ArrayList<Integer> in;
     static ArrayList<Integer> post;
