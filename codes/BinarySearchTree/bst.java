@@ -371,7 +371,40 @@ public class bst {
                 right = revInorderItr(rs);
             }
         }
-    } 
+    }
+
+
+    // remove a node BST
+    public static Node remove(Node node, int data) {
+        // write your code here 
+        if(node == null) return null;
+        if(data < node.data){
+            node.left = remove(node.left, data);
+            return node;
+        }else if(data > node.data){
+            node.right = remove(node.right, data);
+            return node;
+        }else{
+            // 1 case
+            // leaf node
+            if(node.left == null && node.right == null){
+                return null;
+            // node has only left child
+            }else if(node.left == null){
+                return node.right;
+            //  node has only right child
+            }else if(node.right == null){
+                return node.left;
+            }else{
+                // node has both left and right child
+                int lmax = max(node.left);
+                node.data = lmax;
+                node.left = remove(node.left,lmax);
+                return node;
+            }
+        }
+    }
+    
     public static void fun () {
         int[] data= {10,20,30,40,50,60,70,80,90};
         Node root = construct(data,0,data.length-1);

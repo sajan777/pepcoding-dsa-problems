@@ -1,0 +1,103 @@
+import java.util.*;
+
+// min priority queue
+class priorityqueue{
+    private ArrayList<Integer> data;
+    
+    public priorityqueue(){
+        data = new ArrayList<>();
+    }
+
+    private void swap(int i,int j){
+        int temp = data.get(i);
+        data.set(i, data.get(j));
+        data.set(j, temp);
+    }
+
+    private void upheapify(int idx){
+        if (idx == 0) return;
+
+        int pi = (idx-1)/2;
+        // based on this condtion min heap is forming if reversed max can be created!!!!!
+        if(data.get(idx) < data.get(pi)){
+            swap(idx,pi);
+            upheapify(pi);
+        }
+    }
+
+    public void add(int val){
+        data.add(val);
+        // maintain heapify
+        upheapify(data.size()-1);
+    }
+
+    private void downheapify(int idx){
+
+       int minIndx = idx;
+       int lci = 2*idx+1;
+       int rci = 2*idx+2;
+
+        // by changing the conditions we can convert to max PQ
+       if(lci < data.size() && data.get(minIndx) > data.get(lci)){
+            minIndx = lci;
+       }
+       if(rci < data.size() && data.get(minIndx) > data.get(rci)){
+           minIndx = rci;
+       }
+       if(minIndx != idx){
+           swap(idx, minIndx);
+           downheapify(minIndx);
+       }
+    }
+
+    public int remove(){
+        if(data.size() == 0){
+            System.out.println("Underflow");
+            return -1;      
+        }                            
+        swap(0,data.size()-1);           
+        int val = data.remove(data.size()-1);
+        // maintain heap Order property
+        downheapify(0);
+        return val;
+    }
+    public int peek(){
+        if(data.size() == 0){
+            System.out.println("Underflow");
+            return -1;
+        }
+        return data.get(0);
+    }
+    
+    public int size(){
+        return data.size();
+    }
+    
+    public void display(){
+        System.out.println(data);
+    }
+}
+public class pq {
+    
+    public static void fun() {
+        priorityqueue pq = new priorityqueue();
+        pq.add(10);
+        pq.add(20);
+        pq.add(15);
+        pq.add(35);
+        pq.add(30);
+        pq.add(25);
+        pq.add(27);
+        pq.add(40);
+        pq.add(42);
+        pq.display();
+        System.out.println(pq.peek());
+        System.out.println(pq.remove());
+        pq.display();
+    }
+
+    public static void main(String[] args) {
+        fun();
+    }
+}
+ 
