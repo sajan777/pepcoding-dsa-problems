@@ -1,5 +1,7 @@
 import java.util.*;
 
+import graphQue.Edge;
+
 public class bst {
     
     public static class Node{
@@ -401,6 +403,35 @@ public class bst {
                 node.data = lmax;
                 node.left = remove(node.left,lmax);
                 return node;
+            }
+        }
+    }
+
+    // Iterative DFS
+    public static class dfsPair{
+        int vtx;
+        String psf;
+
+        public dfsPair(int vtx,String psf){
+            this.vtx = vtx;
+            this.psf = psf;
+        }
+    }
+    public static void iterativeDFS(ArrayList<Edge>[] graph,int src){
+        Stack<dfsPair> st = new Stack<>();
+        boolean[] vis = new boolean[graph.length];
+        st.push(new dfsPair(src,src+""));
+        while(st.size() > 0){
+            dfsPair rem = st.pop();
+            if(vis[rem.vtx] == true){
+                continue;
+            }
+            vis[rem.vtx] = true;
+            System.out.println(rem.vtx+"@"+rem.psf);
+            for(Edge e:graph[rem.vtx]){
+                if(vis[e.nbr] == false){
+                    st.push(new dfsPair(e.nbr, rem.psf+e.nbr));
+                }
             }
         }
     }
