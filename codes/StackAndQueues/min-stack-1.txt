@@ -45,7 +45,7 @@ public class Main {
         System.out.println("Stack underflow");
         return -1;
       }else{
-        return allata.peek();
+        return allData.peek();
       }
     }
 

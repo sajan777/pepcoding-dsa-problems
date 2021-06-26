@@ -293,7 +293,7 @@ public class stackQue {
             }
         }
         for(int k=0;k<arr.length;k++){
-            if(k!=potential && arr[k][potential] == 1){
+            if(k!=potential && arr[k][potential] == 0){
                 celeb =false;
                 break;
             }
