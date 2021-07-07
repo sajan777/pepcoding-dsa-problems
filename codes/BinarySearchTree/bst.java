@@ -391,10 +391,10 @@ public class bst {
             // leaf node
             if(node.left == null && node.right == null){
                 return null;
-            // node has only left child
+            //  node has only right child
             }else if(node.left == null){
                 return node.right;
-            //  node has only right child
+            // node has only left child
             }else if(node.right == null){
                 return node.left;
             }else{

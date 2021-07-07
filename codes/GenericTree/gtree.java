@@ -613,8 +613,8 @@ public class gtree{
     public static void predecessorAndSuccessor(Node node, int data) {
         if(state == 0){
             if(node.data == data){
-            }else{
                 state++;
+            }else{
                 predecessor = node;
             }
         }else if(state == 1){

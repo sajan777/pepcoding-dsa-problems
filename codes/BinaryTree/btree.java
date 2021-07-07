@@ -50,7 +50,6 @@ public class btree {
                 // left child
                 indx++;
                 if(arr[indx] != null){
-
                     Node nn = new Node(arr[indx]);
                     p.node.left = nn;
                     st.push(new Pair(nn,0));
@@ -70,7 +69,6 @@ public class btree {
                 st.pop();
             }
         }
-
         return root;
     }
 
@@ -603,8 +601,6 @@ public class btree {
             node = null;
             
             // my approach
-            // node.left = null;
-            // node.right = null;
             // return null;
         }
 
