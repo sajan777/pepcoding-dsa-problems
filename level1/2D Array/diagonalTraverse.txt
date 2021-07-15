@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+        public static Scanner scn = new Scanner(System.in);
+
+    public static void main(String[] args) throws Exception {
+        int n = scn.nextInt();
+        int[][] arr = new int[n][n];
+        takeInput(arr);
+        dt(arr);
+    }
+    public static void dt(int[][] arr){
+        int n = arr.length;
+        for(int d=0;d<n;d++){
+            int i = 0;
+            int j = d;
+            while(j<n){
+                System.out.println(arr[i][j]);
+                i++;
+                j++;
+            }
+        }
+    }
+    public static void takeInput(int[][] arr){
+        for(int r=0;r<arr.length;r++){
+            for(int c=0;c<arr[0].length;c++){
+                arr[r][c] = scn.nextInt();
+            }
+        } 
+    }
+
+}

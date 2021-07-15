@@ -24,7 +24,7 @@ public class Main {
     }
     public static void swap(int[][] arr){
         int left = 0;
-        int right = arr[0].length-1;
+        int right = arr[0].length-1; 
         while(left<right){
             for(int rows=0;rows<arr.length;rows++){
               int temp = arr[rows][left];

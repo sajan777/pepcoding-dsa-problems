@@ -150,6 +150,9 @@ public class recursion {
         }
     }
 
+
+
+    // Knights DIR
     public static int[] xdir = {-2, -1, 1, 2, 2, 1, -1, -2};
     public static int[] ydir = {1, 2, 2, 1, -1, -2, -2, -1};
 
@@ -188,36 +191,60 @@ public class recursion {
         // unmark
     }
 
-    public static boolean isSafeToPlace(int[][] board, int r, int c, int n) {
+
+
+    // SUDOKU
+    public static boolean isSafeToPlace(char[][] board,int r,int c,char n){
         // row check
-
-
+        for(int col=0;col<board[0].length;col++){
+            if(board[r][col] == n) return false;
+        }
         // col check
-
-
-        // sub matrics check
-
-
+        for(int row=0;row<board.length;row++){
+            if(board[row][c] == n) return false;
+        }
+       // sub matrix check
+        int rr = r-r%3;
+        int cc = c-c%3;
+        for(int row=0;row<3;row++){
+            for(int col=0;col<3;col++){
+                if(board[row + rr][col + cc] == n) return false;
+            }
+        }
         return true;
     }
-
-    public static void sudoku(int[][] board, int r) {
-        if(r == board.length) {
-            // sudoku is completely solve
-            display(board);
-            return;
-        }
-
-        for(int c = 0; c < board.length; c++) {
-            if(board[r][c] == 0) {
-                for(int num = 1; num < 10; num++) {
-                    if(isSafeToPlace(board, r, c, num) == true) {
-                        board[r][c] = num;
-                        sudoku(board, r + 1);
-                        board[r][c] = 0;
-                    }
+    public void solve(char[][] board,int r,int c,char[][] ans){
+        if(r == board.length){
+            for(int i=0;i<board.length;i++){
+                for(int j=0;j<board.length;j++){
+                    ans[i][j] = board[i][j];
                 }
             }
+            return;
+        }
+        if(c == board[0].length){
+            solve(board,r+1,0,ans);
+            return;
+        }
+        if(board[r][c] == '.'){
+            for (char num = '1'; num <= '9'; num++) {
+                if(isSafeToPlace(board, r, c, num) == true) {
+                    board[r][c] = num;
+                    solve(board, r,c+1,ans);
+                    board[r][c] = '.';
+                }
+            }
+        }else{
+            solve(board,r,c+1,ans);
+        }
+    }
+    public void solveSudoku(char[][] board) {
+        char[][] ans = new char[board.length][board.length];
+        solve(board,0,0,ans);
+        for(int i=0;i<board.length;i++){
+                for(int j=0;j<board.length;j++){
+                    board[i][j] = ans[i][j];
+                }
         }
     }
 

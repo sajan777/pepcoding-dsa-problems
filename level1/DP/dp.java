@@ -438,7 +438,7 @@ public class dp {
 
     public static int gold_mine_tab1(int[][] arr,int[][] dp){
         int res = 0;
-        for(int y=arr[0].length -1;y>=0;y--){
+        for(int y=arr[0].length-1;y>=0;y--){
             for(int x=0;x<arr.length;x++){
                 if(y == arr[0].length - 1){
                     // last col
@@ -1371,13 +1371,20 @@ public class dp {
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Partition into K subset~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public static long partitionKSubset(int n, int k) {
-        long[][] dp = new long[n+1][k+1];
-        for(int i=0;i<=n;i++){
-            for(int j=0;j<=k;j++){
-                if(j == 0)
+        long[][] dp = new long[n + 1][k + 1];
+
+        for(int i = 0; i <= n; i++) {
+            for(int j = 0; j <= i && j <= k; j++) {
+                if(j == 0) {
+                    dp[i][j] = 0;
+                } else if(i == j) {
+                    dp[i][j] = 1;
+                } else {
+                    dp[i][j] = dp[i - 1][j - 1] + j * dp[i - 1][j];
+                }
             }
         }
-        
+        return dp[n][k];
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Buy and sell stocls~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

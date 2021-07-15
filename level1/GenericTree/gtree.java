@@ -735,7 +735,7 @@ public class gtree{
                 smaxHt = maxHt; 
                 maxHt = ht;
             }else if(ht > smaxHt){
-                smaxHt = maxHt;
+                smaxHt = ht;
             }
         }        
         diameter = Math.max(diameter,maxHt+smaxHt+2);
