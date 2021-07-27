@@ -262,7 +262,6 @@ public class graphQue{
     
     // Hamiltonian Path and Cycle
     public static void hamiltonianPathAndCycle(ArrayList<Edge>[] graph,int src,int osrc,HashSet<Integer> visited,String psf){
-
         if(visited.size() == graph.length-1){
             psf += src;
             // check whether the path is cyclic or normal
@@ -279,8 +278,7 @@ public class graphQue{
                 System.out.println(psf+".");
             }
             return;
-        }
-        
+        }        
         visited.add(src);
         for(Edge e:graph[src]){
             int nbr = e.nbr;

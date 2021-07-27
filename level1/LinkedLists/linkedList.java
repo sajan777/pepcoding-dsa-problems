@@ -461,7 +461,7 @@ public class linkedList {
         return slow;
     }
     // Merge Sort LinkedList
-    public static LinkedList mergeSort(Node head, Node tail){
+    public static LinkedList mergeSort(Node head, Node tail)
         if(head == tail){
             LinkedList base = new LinkedList();
             base.addLast(tail.data);
@@ -542,9 +542,9 @@ public class linkedList {
     public void kReverse(int k) {
         LinkedList prev = null;
 
-        while(this.size() > 0){
+        while(this.size > 0){
             LinkedList curr = new LinkedList();
-            if(this.size() >= k){
+            if(this.size >= k){
                 // removeFirst from this, addFirst in curr
                 for(int i=0;i<k;i++){
                     int data = this.getFirst();
@@ -555,7 +555,7 @@ public class linkedList {
             }else{
 
                 // removeFirst from this,addLast in curr
-                while(this.size() > 0){
+                while(this.size > 0){
                     
                     int data = this.getFirst();
                     this.removeFirst();
@@ -563,11 +563,8 @@ public class linkedList {
                 }
             }
             if(prev == null){
-                // change the refrence from prev to curr
-                // as values till k have been removed and added to curr;
                 prev = curr;
             }else{
-                // as we are modifying the size we use data member not member function->size();
                 prev.tail.next = curr.head;
                 prev.tail = curr.tail;
                 prev.size += curr.size;

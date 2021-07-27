@@ -1436,6 +1436,22 @@ public class dp {
         return pws;
     }
 
+    // Infinite transaction with cooldown 1 day
+    public static int buyAndSellMultipleCooldown(int[] price){
+        int pwb = -price[0];
+        int pws = 0;
+        int pwc = 0;
+        for(int i=1;i<price.length;i++){
+            int n_pwb = Math.max(pwb,pwc-price[i]);
+            int n_pws = Math.max(pws,price[i]+pwb);
+            int n_pwc = Math.max(pwc,pws);
+            pwb = n_pwb;
+            pws = n_pws;
+            pwc = n_pwc;
+        }
+        return pws;
+    }
+
 
     public static void main(String[] args) {
         ques();
