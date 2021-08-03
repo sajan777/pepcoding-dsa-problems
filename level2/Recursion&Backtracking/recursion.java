@@ -776,6 +776,11 @@ public class recursion{
         if(n==1) return 0;
         return (solution(n-1,k)+k)%n;
     }
+    // if(n == 1) return 0;
+    
+    // int rres = solution(n - 1, k);
+    
+    // return (rres + k) % n;
     // Lexicographical Numbers
     public static void lexicography(int val,int n){
         if(val > n) return;
@@ -921,24 +926,24 @@ public class recursion{
             int s3Crypt = findCRYPT(s3, charIntMap);
             if (s1Crypt + s2Crypt == s3Crypt) {
             // sorted order 0 to 26 for every character
-            for (int i = 0; i < 26; i++) {
-                char ch = (char) ('a' + i);
-                if (charIntMap.containsKey(ch) == true) {
-                    System.out.print(ch + "-" + charIntMap.get(ch) + " ");
+                for (int i = 0; i < 26; i++) {
+                    char ch = (char) ('a' + i);
+                    if (charIntMap.containsKey(ch) == true) {
+                        System.out.print(ch + "-" + charIntMap.get(ch) + " ");
+                    }
                 }
-            }
-            System.out.println();
+                System.out.println();
             }
             return;
         }
         char ch = unique.charAt(idx);
         for (int i = 0; i < 10; i++) {
             if (usedNumbers[i] == false) {
-            usedNumbers[i] = true;
-            charIntMap.put(ch, i);
-            solution(unique, idx + 1, charIntMap, usedNumbers, s1, s2, s3);
-            charIntMap.remove(ch);
-            usedNumbers[i] = false;
+                usedNumbers[i] = true;
+                charIntMap.put(ch, i);
+                solution(unique, idx + 1, charIntMap, usedNumbers, s1, s2, s3);
+                charIntMap.remove(ch);
+                usedNumbers[i] = false;
             }
         }
     }
@@ -1067,32 +1072,477 @@ public class recursion{
         }
 	}
     // k-partition
-    public static void solution(int i, int n, int k, int rssf, ArrayList<ArrayList<Integer>> ans) {
-        if(i > k){
-            if(ans.size() == k){
-                for(int j=0;j<ans.size();j++){
-                    ArrayList<Integer> li = ans.get(j);
-                    System.out.print(j+1+". "+li);
+    static int counter = 1;
+	public static void solution(int i, int n, int k, int rssf, ArrayList<ArrayList<Integer>> ans) {
+	    if(i > n){
+	        if(ans.size() == k){
+	            System.out.print(counter+". ");
+	            for(int j = 0; j < ans.size(); j++) {
+                    ArrayList<Integer> list = ans.get(j);
+                    System.out.print(list + " ");
+                }
+	            System.out.println();
+	            counter++;
+	        }
+	        return;
+	    }
+	   // add to prev
+	   for(int j=0;j<ans.size();j++){
+	       ArrayList<Integer> li = ans.get(j);
+	       li.add(i);
+	       solution(i+1,n,k,rssf,ans);
+	       li.remove(li.size()-1);
+	   }
+	   // start from self
+	   if(ans.size()+1 <= k){
+	       ArrayList<Integer> myres = new ArrayList<>();
+	       myres.add(i);
+	       ans.add(myres);
+	       solution(i+1,n,k,rssf,ans);
+	       ans.remove(ans.size()-1);
+	   }
+	}
+    // Magnets 
+    public static int signCountInRow(char[][] ans, int row, char sign) {
+        int count = 0;
+        for (int c = 0; c < ans[0].length; c++) {
+            if (ans[row][c] == sign) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static int signCountInCol(char[][] ans, int col, char sign) {
+        int count = 0;
+        for (int r = 0; r < ans.length; r++) {
+            if (ans[r][col] == sign) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static boolean isValid(char[][] ans, int[] top, int[] left, int[] right, int[] bottom, int r, int c,
+            char sign) {
+        // make a check for valid polarity
+        int[] xdir = { -1, 0, 0 };
+        int[] ydir = { 0, 1, -1 };
+        for (int d = 0; d < 3; d++) {
+            int rr = r + xdir[d];
+            int cc = c + ydir[d];
+            if (rr >= 0 && rr < ans.length && cc >= 0 && cc < ans[0].length && ans[rr][cc] == sign) {
+                return false;
+            }
+        }
+        // make a check for valid sign count in row and col
+        int cir = signCountInRow(ans, r, sign); // cir -> count in row
+        int cic = signCountInCol(ans, c, sign); // cic -> count in column
+
+        // top and left -> +ve sign, bottom ans right -> -ve sign
+        if (sign == '+') {
+            if ((top[c] != -1 && cic >= top[c]) || (left[r] != -1 && cir >= left[r])) {
+                return false;
+            }
+        } else {
+            if ((bottom[c] != -1 && cic >= bottom[c]) || (right[r] != -1 && cir >= right[r])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isCorrectResult(char[][] ans, int[] top, int[] left, int[] bottom, int[] right) {
+        // check for row
+        for (int r = 0; r < ans.length; r++) {
+            int pcount = 0; // positive count
+            int ncount = 0; // negative count
+            for (int c = 0; c < ans[0].length; c++) {
+                if (ans[r][c] == '+')
+                    pcount++;
+                else if (ans[r][c] == '-')
+                    ncount++;
+            }
+            if (left[r] != -1 && left[r] != pcount)
+                return false;
+            if (right[r] != -1 && right[r] != ncount)
+                return false;
+        }
+        // check for col
+        for (int c = 0; c < ans[0].length; c++) {
+            int pcount = 0; // positive count
+            int ncount = 0; // negative count
+            for (int r = 0; r < ans.length; r++) {
+                if (ans[r][c] == '+')
+                    pcount++;
+                else if (ans[r][c] == '-')
+                    ncount++;
+            }
+            if (top[c] != -1 && top[c] != pcount)
+                return false;
+            if (bottom[c] != -1 && bottom[c] != ncount)
+                return false;
+        }
+        return true;
+    }
+
+    public static boolean solution(char[][] arr, int[] top, int[] left, int[] right, int[] bottom, char[][] ans,
+            int row, int col) {
+        if (col == arr[0].length) {
+            col = 0;
+            row++;
+        }
+        if (row == ans.length) {
+            if (isCorrectResult(ans, top, left, bottom, right))
+                return true;
+            else
+                return false;
+        }
+        // yes call
+        if (arr[row][col] == 'L') {
+            // [L | R] -> + -
+            if (isValid(ans, top, left, right, bottom, row, col, '+')
+                    && isValid(ans, top, left, right, bottom, row, col + 1, '-')) {
+                // place + -
+                ans[row][col] = '+';
+                ans[row][col + 1] = '-';
+                if (solution(arr, top, left, right, bottom, ans, row, col + 2) == true) {
+                    return true;
+                }
+                // unplace + -
+                ans[row][col] = 'X';
+                ans[row][col + 1] = 'X';
+            }
+            // [L | R] -> - +
+            if (isValid(ans, top, left, right, bottom, row, col, '-')
+                    && isValid(ans, top, left, right, bottom, row, col + 1, '+')) {
+                // place - +
+                ans[row][col] = '-';
+                ans[row][col + 1] = '+';
+                if (solution(arr, top, left, right, bottom, ans, row, col + 2) == true) {
+                    return true;
+                }
+                // unplace - +
+                ans[row][col] = 'X';
+                ans[row][col + 1] = 'X';
+            }
+        } else if (arr[row][col] == 'T') {
+            // [T | B] -> + -
+            if (isValid(ans, top, left, right, bottom, row, col, '+')
+                    && isValid(ans, top, left, right, bottom, row + 1, col, '-')) {
+                // place + -
+                ans[row][col] = '+';
+                ans[row + 1][col] = '-';
+                if (solution(arr, top, left, right, bottom, ans, row, col + 1) == true) {
+                    return true;
+                }
+                // unplace + -
+                ans[row][col] = 'X';
+                ans[row + 1][col] = 'X';
+            }
+            // [T | B] -> - +
+            if (isValid(ans, top, left, right, bottom, row, col, '-')
+                    && isValid(ans, top, left, right, bottom, row + 1, col, '+')) {
+                // place - +
+                ans[row][col] = '-';
+                ans[row + 1][col] = '+';
+                if (solution(arr, top, left, right, bottom, ans, row, col + 1) == true) {
+                    return true;
+                }
+                // unplace - +
+                ans[row][col] = 'X';
+                ans[row + 1][col] = 'X';
+            }
+        }
+        // no call
+        if (solution(arr, top, left, right, bottom, ans, row, col + 1)) {
+            return true;
+        }
+        return false;
+    }
+    // char[][] ans = new char[m][n];
+    // for(int i=0;i<ans.length;i++){
+    //     for(int j=0;j<ans[0].length;j++){
+    //         ans[i][j] = 'X';
+    //     }
+    // }
+    // boolean res = solution(arr,top,left,right,bottom,ans,0,0);
+    // print(ans);
+
+
+    // Friends Pairing - 2
+    static int count = 1;
+    public static void solution(int i, int n, boolean[] used, String asf) {
+        if(i > n){
+            System.out.println(count+"."+asf);
+            count+=1;
+            return;
+        }
+
+        // no call
+        if(used[i] == true){
+            // already included in lower level so no options
+            solution(i+1,n,used,asf);
+            
+        }else{
+            // yes call
+            // single call
+            used[i] = true;
+            solution(i+1,n,used,asf+"("+i+") ");
+            
+            // pairup call
+            for(int k=i+1;k<=n;k++){
+                if(used[k] == false){
+                    used[k] = true;
+                    solution(i+1, n, used, asf+"("+i+","+k+") ");
+                    used[k] = false;
+                }
+            }
+            used[i] = false;
+     
+        }
+    }
+    // All Palindromic Permutations
+    public static String reverseString(String str){
+        String res = "";
+        for(int i=str.length()-1;i>=0;i--){
+            res += str.charAt(i);
+        }
+        return res;
+    }
+    public static void generatepw(int cs, int ts, HashMap<Character, Integer> fmap, Character oddc, String asf) {
+		if(cs == ts){
+            String rev = reverseString(asf);
+            if(oddc == null){
+                System.out.println(asf+rev);
+            }else{
+                System.out.println(asf+oddc+rev);
+            }
+            return;
+        }
+        for(char ch:fmap.keySet()){
+            if(fmap.get(ch) > 0){
+                int oldFreq = fmap.get(ch);
+                fmap.put(ch, oldFreq-1); //mark
+                generatepw(cs+1, ts, fmap,oddc, asf+ch);
+                fmap.put(ch, oldFreq); //unmark
+            }
+        }
+	}
+    public static void generatepwMain(HashMap<Character,Integer> fmap){
+        int oddCount = 0;
+        Character ch = null;
+        int ts = 0;
+        for(char key:fmap.keySet()){
+            ts += fmap.get(key);
+            if(fmap.get(key) % 2 == 1){
+                oddCount++;
+                ch = key;
+            }
+            fmap.put(key, fmap.get(key)/2);
+        }
+        if(oddCount > 1){
+            System.out.println("-1");
+            return;
+        }
+        generatepw(0, ts/2, fmap, ch, "");
+    }
+    // All Palindromic Partitions
+    public static boolean isStringPallindrome(String str){
+        int left = 0;
+        int right = str.length()-1;
+        while(left < right){
+            if(str.charAt(left) != str.charAt(right)) return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+    public static void solution(String str, String asf) {
+        if(str.length() == 0){
+            System.out.println(asf);
+            return;
+        }
+        for(int i=0;i<str.length();i++){
+            String options = str.substring(0, i+1);
+            String ros = str.substring(i+1);
+            if(isStringPallindrome(options) == true){
+                solution(ros, asf+"("+options+") ");
+            }
+        }
+		
+	}
+    // K Subsets With Equal Sum
+    public static  boolean equalSum(int[] subsetSum){
+        int val = subsetSum[0];
+        for(int el:subsetSum){
+            if(el != val) return false;
+        }
+        return true;
+    }
+    public static void solution(int[] arr, int indx,int sum , int k,int[] subsetSum,int ssf, ArrayList<ArrayList<Integer>> ans) {
+        if(indx == arr.length){
+            if(ssf == k){
+                if(equalSum(subsetSum) == true){
+                    for(ArrayList<Integer> list : ans){
+                        System.out.print(list+" ");
+                    }
+                    System.out.println();
                 }
             }
             return;
         }
+        
+        int val = arr[indx];
+        // existing me add
+        int i = 0;
+        while(i<ans.size() && ans.get(i).size() > 0){
+            if(subsetSum[i] + val <= (sum/k)){
+                // increase in subset sum
+                subsetSum[i] += val;
+                // add in ans
+                ans.get(i).add(val);
+                
+                // call
+                solution(arr, indx + 1, sum, k, subsetSum, ssf, ans);
+                
+                // decrease subset sum
+                subsetSum[i] -= val;
+                // remove from ans
+                ans.get(i).remove(ans.get(i).size()-1);
+            }
+            i++;
+        }
+        // nayi shurvaat (single call with new set)
+        if(i < k){
+            // increase in subset sum
+            subsetSum[i] += val;
+            // add in ans
+            ans.get(i).add(val);
+            
+            // call
+            solution(arr, indx + 1, sum, k, subsetSum, ssf + 1, ans);
+            
+            // decrease subset sum
+            subsetSum[i] -= val;
+            // remove from ans
+            ans.get(i).remove(ans.get(i).size()-1);
 
-        // n-1,k work, add with prev options
-        for(ArrayList<Integer> list:ans){
-            list.add(i);
-            solution(i+1, n, k, rssf, ans);
-            list.remove(list.size()-1);
         }
-        // n-1,k-1 work start with myself is size+1<=k
-        if(ans.size() + 1 <= k){
-            ArrayList<Integer> myres = new ArrayList<>();
-            myres.add(i);
-            ans.add(myres);
-            solution(i+1, n, k, rssf, ans);
-            ans.remove(ans.size()-1);
+	}
+    // solution(arr,0,sum,k,subsetSum,0,ans);
+    
+    // Tug Of War
+    // soset1,soset2=>sum of set 1,2
+    static int mindiff = Integer.MAX_VALUE;
+	static String ans = "";
+	public static void solve(int[] arr, int indx, ArrayList<Integer> s1, ArrayList<Integer> s2, int sum1,int sum2) {
+        if(indx == arr.length){
+            int diff = Math.abs(sum1-sum2);
+            if(diff<mindiff){
+                mindiff = diff;
+                ans = ""+s1+" "+s2;
+            }
+            return;
         }
-    }
+
+        int val = arr[indx];
+        // val in set1 
+        if(s1.size() < ((arr.length+1)/2)){
+            s1.add(val);
+            solve(arr, indx+1, s1, s2, sum1+val, sum2);
+            s1.remove(s1.size()-1);
+        }
+        // val in set2
+        if(s1.size() > 0 && s2.size() < ((arr.length+1)/2)){
+            s2.add(val);
+            solve(arr, indx+1, s1, s2, sum1, sum2+val);
+            s2.remove(s2.size()-1);
+        }
+	}
+    // /Pattern Matching
+    public static void solution(String str, String pattern, HashMap<Character,String> map, String asf,int indx){
+        if(indx == pattern.length()){
+            if(str.length() == 0){
+                System.out.println(asf+".");
+            }
+            return;
+        }
+
+        char ch = pattern.charAt(indx);
+        String mapping = map.get(ch);
+        for(int i=0;i<str.length();i++){
+            String substr = str.substring(0, i+1);
+            String ros = str.substring(i+1);
+            
+            // mapping
+            map.put(ch, substr);
+            if(mapping.length() > 0){
+                if(substr.equals(mapping) == true){
+                    solution(ros, pattern, map, asf, indx+1);
+                }
+            }else{
+                solution(ros, pattern, map, asf+ch+" -> "+substr+", ", indx+1);
+            }
+            // reset mapping
+            map.put(ch, mapping);
+        }
+	}
+    // for(int i=0;i<pattern.length();i++){
+    //     map.put(pattern.charAt(i),"");
+    // }
+    // solution(str,pattern,map,"",0);
+
+    // Word Break - I
+    public static void wordBreak(String str, String ans, HashSet<String> dict){ 
+        if(str.length() == 0){
+            System.out.println(ans);
+            return;
+        }
+
+        for(int i=0;i<str.length();i++){
+            String subStr = str.substring(0, i+1);
+            String ros = str.substring(i+1);
+            if(dict.contains(subStr) == true){
+                wordBreak(ros, ans+subStr+" ", dict);
+            }
+        }
+	}
+    // /Remove Invalid Parenthesis
+    public static void solution(String str, int minRemoval, HashSet<String> ans) {
+        if(minRemoval == 0){
+            if(getMin(str) == 0 && ans.contains(str) == false){
+                ans.add(str);
+                System.out.println(ans);
+            }
+            return;
+        }
+
+        for(int i=0;i<str.length();i++){
+            String left = str.substring(0, i);
+            String right = str.substring(i+1);
+
+            solution(left+right,minRemoval-1,ans);
+        }
+	}
+
+	public static int getMin(String str){
+        Stack<Character> st = new Stack<>();
+        for(int i=0;i<str.length();i++){
+            char ch = str.charAt(i);
+            if(ch == '('){
+                st.push(ch);
+            }else{
+                if(st.size() > 0 && st.peek() == '('){
+                    st.pop();
+                }else{
+                    st.push(ch);
+                } 
+            }
+        
+        }
+        return st.size();
+	}
 
     
     public static void main(String[] args) {
