@@ -233,7 +233,7 @@ public class tns {
     }
     // random data O(logn),sorted Data O(n2) 
     public static void quickSort(int[] arr,int lo,int hi){
-        if(lo > hi) return;  
+        if(lo >= hi) return;  
          
         int pivot = arr[hi];
         int pivotIdx = partitionIndex(arr, lo, hi, pivot);
