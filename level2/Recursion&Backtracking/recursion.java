@@ -1513,7 +1513,7 @@ public class recursion{
         if(minRemoval == 0){
             if(getMin(str) == 0 && ans.contains(str) == false){
                 ans.add(str);
-                System.out.println(ans);
+                System.out.println(str);
             }
             return;
         }
@@ -1532,7 +1532,7 @@ public class recursion{
             char ch = str.charAt(i);
             if(ch == '('){
                 st.push(ch);
-            }else{
+            }else if(ch == ')'){
                 if(st.size() > 0 && st.peek() == '('){
                     st.pop();
                 }else{
@@ -1543,6 +1543,8 @@ public class recursion{
         }
         return st.size();
 	}
+
+    // REmove
 
     
     public static void main(String[] args) {
