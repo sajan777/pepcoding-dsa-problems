@@ -42,6 +42,7 @@ public class LRUCache{
         this.size--;
         return rem.key;
     }
+    
     public void removeNode(Node node){
         if(this.size == 1){
             this.head = this.tail = null;

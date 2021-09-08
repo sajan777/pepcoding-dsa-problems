@@ -26,12 +26,14 @@ class hashMap<K,V>{
         // loop and init the bucket array with LL as default is null
         init(4);
     }
+    
     private int hashFunction(K key){
         // in java every data type has hashcode function hashcode->Always integer
         int bi = Math.abs(key.hashCode()) % bucket.length;
         // 0<=bi<bucket.length;
         return bi;
     }
+    
     private int searchInBucket(K key,int bi){
         int di = 0;
 
@@ -43,6 +45,7 @@ class hashMap<K,V>{
         }
         return -1 ;
     }
+    
     private void rehash(){
         LinkedList<Node>[] ob = bucket;
         init(2 * bucket.length);
@@ -77,6 +80,7 @@ class hashMap<K,V>{
         }
         
     }
+    
     public V remove(K key) {
         int bi = hashFunction(key);
         int di = searchInBucket(key, bi);
@@ -90,6 +94,7 @@ class hashMap<K,V>{
             return rem.value;
         }
     }
+    
     public V get(K key) {
         int bi = hashFunction(key);
         int di = searchInBucket(key, bi);
@@ -102,6 +107,7 @@ class hashMap<K,V>{
             return g.value;
         }
     }
+    
     public boolean containsKey(K key) {
         int bi = hashFunction(key);
         int di = searchInBucket(key, bi);
@@ -152,7 +158,7 @@ class hashMap<K,V>{
 
 public class genericHmap {
     public static void fun() {
-        hashMap hmap = new hashMap();
+        hashMap<String,Integer> hmap = new hashMap();
         hmap.put("India", 125);
         hmap.put("Pakistan", 90);
         hmap.put("US", 70);

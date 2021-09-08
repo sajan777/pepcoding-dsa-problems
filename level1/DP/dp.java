@@ -180,6 +180,7 @@ public class dp {
     }
 
     public static int climb_stairs_var_jumps_tab(int n,int[] jumps,int[] dp){
+        // int[] dp = new int[n+1];
         for(int i=n;i>=0;i--){
             if(i == n){
                 dp[i] = 1;

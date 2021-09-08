@@ -470,6 +470,7 @@ public class linkedlistT {
         // set clonned head
         return d2.next;
     }
+    
     // clone random pointers in linedklist using hashmap
     public Node copyRandomList2(Node head) {
         Node dummy = new Node(-1);
@@ -703,9 +704,63 @@ public class linkedlistT {
         pivot.next = larger_head.next;
         return smaller_head.next;
     }
+    //25. Reverse Nodes in k-Group  
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(k == 0) return head;          
+        ListNode ans = new ListNode();
+        ListNode head1 = ans;
+        ListNode temp = head;
+        while(temp != null){
+            LinkedList<Integer> curr = new LinkedList<>();
+            for(int i=0;i<k && temp != null;i++){
+                curr.addFirst(temp.val);
+                temp = temp.next;
+            }
+            if(curr.size() != k){
+                 while(curr.size() > 0){
+                    ListNode t = new ListNode(curr.removeLast());
+                    ans.next = t;
+                    ans = ans.next;
+                }
+                
+            }else{
+                while(curr.size() > 0){
+                    ListNode t = new ListNode(curr.removeFirst());
+                    ans.next = t;
+                    ans = ans.next;
+                }
+                
+            }
 
+        }
+        return head1.next;
+    }
+    // 92. Reverse Linked List II
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if(head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode itr = dummy;
+        ListNode prev = null;
+        for(int i=0;i<left;i++){
+            prev = itr;
+            itr = itr.next;
+        }
+        // reversal
+        ListNode curr = itr;
+        ListNode prevR = prev;
+        for(int i=left;i<=right && curr != null;i++){
+            ListNode next = curr.next;
+            curr.next = prevR;
+            prevR = curr;
+            curr = next;
+        }
+        // connections
+        prev.next = prevR;
+        itr.next = curr;
+        return dummy.next;
+    }
 
     public static void main(String[] args) {
-        
     }
 }
