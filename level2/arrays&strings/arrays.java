@@ -487,6 +487,7 @@ public class arrays {
     // 0(nlogn) + 0(1)
     public int firstMissingPositive1(int[] nums) {
         int missingPositive = 1;
+        Arrays.sort(nums);
         for(int i=0;i<nums.length;i++){
             if(nums[i] == missingPositive){
                 missingPositive++;
@@ -719,7 +720,7 @@ public class arrays {
     public static List<List<Integer>> fourSum(int[] nums, int target) {
         List<List<Integer>> res = new ArrayList<>();
         Arrays.sort(nums);
-        for(int i=0;i<nums.length;i++){
+        for(int i=0;i<nums.length-3;i++){
             if(i > 0 && nums[i] == nums[i-1]) continue;
             int val = nums[i];
             int smallTarget = target-val;
@@ -732,15 +733,74 @@ public class arrays {
         return res;
     }
 
-    // K Sum - Target Sum Unique Set
-    public static void kSum_Util(int[] arr,int target,int k,int st,List<List<Integer>> res,List<Integer> subres){
+    // K Sum - Target Sum Unique Set 0(n^k-1) == 0(n^k)
+    public static List<List<Integer>> kSum_Util(int[] arr,int target,int si,int k){
+        if(k == 2){
+            // base
+            return twoSum_(arr,si,arr.length-1,target);
+        }
+        
+        List<List<Integer>> res = new ArrayList<>();
+        for(int i=si;i<arr.length-(k-1);i++){
+            if(i > si && arr[i] == arr[i-1]) continue;
+           int val1 = arr[i];
+           int smallTarget = target-val1;
+           List<List<Integer>> subres = kSum_Util(arr,smallTarget,i+1,k-1);
+           for(List<Integer> list:subres){
+               list.add(val1);
+               res.add(list);
+           } 
+        }
+        return res;
+    }
+
+    
+    public static List<List<Integer>> kSum(int[] arr, int target, int k) {
+        Arrays.sort(arr);
+        List<List<Integer>> res = kSum_Util(arr,target,0,k);
+        return res;
+    }
+    // Sieve Of Eratosthenes
+    public static void printPrimeUsingSieve(int n) {
+        boolean[] isPrime = new boolean[n+1];
+        Arrays.fill(isPrime,true);
+        for(int i=2;i*i<=n;i++){
+            if(isPrime[i] == true){
+                int count = 2;
+                int factor = i*count;
+                while(factor<=n){
+                    isPrime[factor] = false;
+                    factor=i*count;
+                    count++;
+                }
+            }
+        }
+        for(int i=2;i<isPrime.length;i++){
+            if(isPrime[i] == true) System.out.print(i+" ");
+        }
+    }    
+    // Segmented Sieve (will do later!!!!!!!!!!!)
+    public static void segmentedSieveAlgo(int a, int b) {
 
     }
-    public static List<List<Integer>> kSum(int[] arr, int target, int k) {
-        List<List<Integer>> res = new ArrayList<>();
+
+    // Find Pair Given Difference  https://practice.geeksforgeeks.org/problems/find-pair-given-difference1559/1
+    public boolean findPair(int arr[], int size, int n){
+        if(size == 0) return false;
         Arrays.sort(arr);
-        kSum_Util(arr,target,k,0,res,new ArrayList<>());
-        return res;
+        int i = 0;
+        int j = 1;
+        while(j < size){
+            int diff = arr[j]-arr[i];
+            if(diff == n){
+                return true;
+            }else if(diff > n){
+                i++;
+            }else{
+                j++;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
