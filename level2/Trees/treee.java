@@ -28,8 +28,11 @@ public class treee {
     public class DirectedGraphNode {
          int label;
          ArrayList<DirectedGraphNode> neighbors;
-         DirectedGraphNode(int x) { label = x; neighbors = new ArrayList<DirectedGraphNode>(); }
-    };
+         DirectedGraphNode(int x) { 
+            label = x; 
+            neighbors = new ArrayList<DirectedGraphNode>(); 
+        }
+    }
 
     // 105. Construct Binary Tree from Preorder and Inorder Traversal
     public TreeNode constructPreIn(int[] pre,int[] in,int preSt,int preEnd,int inSt,int inEnd){
@@ -172,16 +175,9 @@ public class treee {
         return null;
         // return bstFromPreorderUtil(pre,0,Integer.MIN_VALUE,pre[0],pre[0],Integer.MAX_VALUE);
     }
+    // construct from Preorder,PostOrder,LevelOrder -> pending
 
-
-
-
-
-
-
-
-
-
+    
     // 968. Binary Tree Cameras Google
     static int cameras = 0;
     // state 0:- Camera Present

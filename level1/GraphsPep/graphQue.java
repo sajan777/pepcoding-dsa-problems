@@ -72,6 +72,8 @@ public class graphQue{
         }
         visited[src] = false;
     }
+    // boolean[] vis = new boolean[edges];
+    //   printPath(graph,src,dest,vis,"");
 
     // MultiSolver+++++++++++++++++++++++++++
     static class Pair implements Comparable<Pair> {
@@ -454,7 +456,7 @@ public class graphQue{
     public static boolean isGraphBipartiteBFS(ArrayList<Edge>[] graph,int src,int[] vis){
 
         Queue<BPair> qu = new LinkedList<>();
-        qu.add(new BPair(src, 0));
+        qu.add(new BPair(src, 0));                  
         while(qu.size() > 0){
             BPair rem = qu.remove();
             if(vis[rem.vtx] != -1){
@@ -520,7 +522,6 @@ public class graphQue{
         }
         return count;
     }
-
 
     // Shortest path in weights -> DFS Dijkstra
     public static class DPair implements Comparable<DPair>{

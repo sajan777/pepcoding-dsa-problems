@@ -1,6 +1,5 @@
 import java.util.*;
 
-import javax.print.attribute.standard.MediaSize.Other;
 public class dp {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~Fibonacci Sequence~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -360,7 +359,6 @@ public class dp {
                 }
             }
         }
-        
         return dp[0][0];
     }
 
@@ -763,7 +761,6 @@ public class dp {
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~01Knapsack~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
     public static int zero_one_knapsack_rec(int[] wts,int[] values,int indx,int cap){
         if(indx == -1){
             return 0;
