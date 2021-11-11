@@ -1,0 +1,73 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static class Edge{
+        int src;
+        int nbr;
+        int wt;
+        public Edge(int src,int nbr,int wt){
+            this.src = src;
+            this.nbr = nbr;
+            this.wt = wt;
+        }
+        
+    }
+    public static void addEdge(ArrayList<Edge>[] graph,int u,int v){
+        graph[u].add(new Edge(u,v,0));
+        graph[v].add(new Edge(v,u,1));
+    }
+    public static class Pair{
+        int vtx;
+        int csf;
+        
+        public Pair(int vtx,int csf){
+            this.vtx = vtx;
+            this.csf = csf;
+        }
+    }
+    
+    public static int BFS01(ArrayList<Edge>[] graph,int dest){
+        boolean[]  vis = new boolean[graph.length];   
+        LinkedList<Pair> qu = new LinkedList<>();
+        qu.add(new Pair(1,0));
+
+        while(qu.size() > 0){
+            Pair rem = qu.removeFirst();
+            if(vis[rem.vtx] == true){
+                continue;
+            }
+            vis[rem.vtx] = true;
+            if(rem.vtx == dest){
+                return rem.csf;
+            }
+            for(Edge e: graph[rem.vtx]){
+                int nbr = e.nbr;
+                if(vis[nbr] == false){
+                    if(e.wt == 0){
+                        qu.addFirst(new Pair(nbr,rem.csf+0));
+                    }else{
+                        qu.add(new Pair(nbr,rem.csf+1));
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		Scanner scn = new Scanner(System.in);
+		int vertex = scn.nextInt();
+		int edges = scn.nextInt();
+		ArrayList<Edge>[] graph = new ArrayList[vertex+1];
+		for(int i=0;i<vertex+1;i++){
+		    graph[i] = new ArrayList<>();
+		}
+		for(int i =0;i<edges;i++){
+		    int u = scn.nextInt();
+		    int v = scn.nextInt();
+		    addEdge(graph,u,v);
+		}
+		System.out.println(BFS01(graph,vertex));
+	}
+}

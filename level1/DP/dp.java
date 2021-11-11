@@ -721,6 +721,25 @@ public class dp {
         count += coinChange_comb_rec_SubseqStyle(coins, indx + 1, target, psf, dp);
         return dp[indx][target] = count;
     }
+    public static int mem(int[] nums,int target,int idx,Integer[] dp){
+        if(target == 0){
+            return dp[target] = 1;
+        }
+        if(idx == nums.length){
+            return dp[target] = 0;
+        }
+        if(dp[target] != null){
+            return dp[target];
+        }
+        int res = 0;
+        // yes call
+        if(target - nums[idx] >= 0){
+            res += mem(nums,target-nums[idx],idx,dp); 
+        }
+        //no call
+        res += mem(nums,target,idx+1,dp);
+        return dp[target] = res;
+    }
 
     public static int coinChange_comb_tab(int[] coins, int target) {
         int[] dp = new int[target + 1];
@@ -763,7 +782,7 @@ public class dp {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~01Knapsack~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public static int zero_one_knapsack_rec(int[] wts,int[] values,int indx,int cap){
         if(indx == -1){
-            return 0;
+            return 0;    
         }
         int v1=0;
         if(cap - wts[indx] >= 0){

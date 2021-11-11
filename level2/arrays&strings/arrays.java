@@ -30,7 +30,7 @@ public class arrays {
         int j = height.length-1;
         while(i<j){
             int l = j-i;
-            int h = Math.max(height[i], height[j]);
+            int h = Math.min(height[i], height[j]);
             int water = l*h;
             maxWater = Math.max(maxWater, water);
             if(height[i] < height[j]){
@@ -100,6 +100,7 @@ public class arrays {
         }
         return count > nums.length/3;
     }
+    
     public List<Integer> majorityElement2(int[] nums) { 
         int val1 = nums[0];
         int count1 = 1;//count of val1 in current window to make triplets
@@ -689,7 +690,7 @@ public class arrays {
         Arrays.sort(nums);
         List<List<Integer>> res = new ArrayList<>();
         for(int i=0;i<nums.length-2;i++){
-            if(i >0 && nums[i] == nums[i-1]) continue;
+            if(i > 0 && nums[i] == nums[i-1]) continue;
             int val = nums[i];
             int smallTarget = targ - val;
             List<List<Integer>> subres = twoSum_(nums,i+1,nums.length-1,smallTarget);
@@ -1091,7 +1092,7 @@ public class arrays {
     public int[][] merge(int[][] intervals) {
         if(intervals.length == 0) return intervals;
         Arrays.sort(intervals,(val,val2)->Integer.compare(val[0],val2[0]));
-        ArrayList<int[]> list = new ArrayList<>();
+        ArrayList<int[]> list = new ArrayList<>(); 
 
         int lsp = intervals[0][0]; //last interval starting point
         int lep = intervals[0][1]; //last interval ending point

@@ -76,6 +76,12 @@ public class bst {
             // means there is still right
             return max(node.right);
         }
+
+        // if(node.right == null){
+        //     return node.data;
+        // }
+        // int rres = max(node.right);
+        // return rres;
     }
 
     public static int min(Node node) {
@@ -88,6 +94,12 @@ public class bst {
             // means there is still left
             return min(node.left);
         }
+
+        // if(node.left == null){
+        //     return node.data;
+        // }
+        // int rres = min(node.left);
+        // return rres;
         
     }
 
@@ -229,21 +241,28 @@ public class bst {
 
     // print in range
     public static void pir(Node node, int d1, int d2) {
-        if(node == null) return;
+        // if(node == null) return;
         
-        if(d1 < node.data && d2 < node.data){
-            // left side
-            pir(node.left,d1,d2);
-        }else if(d1 > node.data && d2 > node.data){
-            // right side
-            pir(node.right,d1,d2);
-        }else{
-            // answer
-            // as we have to print inInorder we go to left first then print and then right side
-            pir(node.left,d1,d2);
+        // if(d1 < node.data && d2 < node.data){
+        //     // left side
+        //     pir(node.left,d1,d2);
+        // }else if(d1 > node.data && d2 > node.data){
+        //     // right side
+        //     pir(node.right,d1,d2);
+        // }else{
+        //     // answer
+        //     // as we have to print inInorder we go to left first then print and then right side
+        //     pir(node.left,d1,d2);
+        //     System.out.println(node.data);
+        //     pir(node.right,d1,d2);
+        // }
+        
+        if(node == null) return;
+        pir(node.left,d1,d2);
+        if(node.data >= d1 && node.data <= d2){
             System.out.println(node.data);
-            pir(node.right,d1,d2);
         }
+        pir(node.right,d1,d2);
     }
 
     // Target Sum Pair in BST
@@ -299,7 +318,7 @@ public class bst {
         }
       }
 
-      public static int inorderItr(Stack<Pair> st) {
+    public static int inorderItr(Stack<Pair> st) {
         while(st.size() > 0) {
             Pair p = st.peek();
 
@@ -356,7 +375,6 @@ public class bst {
 
         ls.push(new Pair(node, 0));
         rs.push(new Pair(node, 0));
-
 
         int left = inorderItr(ls);
         int right = revInorderItr(rs);
@@ -435,6 +453,7 @@ public class bst {
             }
         }
     }
+
     
     public static void fun () {
         int[] data= {10,20,30,40,50,60,70,80,90};

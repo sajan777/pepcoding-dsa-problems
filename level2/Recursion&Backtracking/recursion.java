@@ -947,6 +947,7 @@ public class recursion{
             }
         }
     }
+    
     // Crossword Puzzle
     // Horizontally
     public static boolean canPlaceHorizontally(char[][] grid,int r,int c,String word){
@@ -976,6 +977,7 @@ public class recursion{
         }
         return true;
     }
+    
     public static boolean[] placeHorizontally(char[][] grid,int r,int c,String word){
         boolean[] status = new boolean[word.length()];
         for(int j=0;j<word.length();j++){
@@ -986,6 +988,7 @@ public class recursion{
         }
         return status;
     }
+    
     public static void unplaceHorizontally(char[][] grid,int r,int c,boolean[] status){
         for(int i=0;i<status.length;i++){
             if(status[i] == true){
@@ -993,6 +996,7 @@ public class recursion{
             }
         }
     }
+    
     // vertically 
     public static boolean canPlaceVertically(char[][] grid,int r,int c,String word){
         // top check
@@ -1013,6 +1017,7 @@ public class recursion{
         }
         return true;
     }
+    
     public static boolean[] placeVertically(char[][] grid,int r,int c,String word){
         boolean[] status = new boolean[word.length()];
         for(int i=0;i<word.length();i++){
@@ -1024,6 +1029,7 @@ public class recursion{
         return status;
         
     }
+    
     public static void unplaceVertically(char[][] grid,int r,int c,boolean[] status){
         for(int i=0;i<status.length;i++){
             if(status[i] == true){
@@ -1031,6 +1037,7 @@ public class recursion{
             }
         }
     }
+    
     public static void displayPuzzle(char[][] grid){
         for(int i = 0; i < grid.length; i++){
           for(int j = 0; j < grid[0].length; j++){
@@ -1039,6 +1046,7 @@ public class recursion{
           System.out.println();
         }
     }
+    
     public static void solution(char[][] grid, String[] words, int vidx){
         if(vidx == words.length){
             displayPuzzle(grid);
@@ -1071,6 +1079,7 @@ public class recursion{
             }
         }
 	}
+    
     // k-partition
     static int counter = 1;
 	public static void solution(int i, int n, int k, int rssf, ArrayList<ArrayList<Integer>> ans) {
@@ -1102,6 +1111,7 @@ public class recursion{
 	       ans.remove(ans.size()-1);
 	   }
 	}
+    
     // Magnets 
     public static int signCountInRow(char[][] ans, int row, char sign) {
         int count = 0;
@@ -1358,6 +1368,7 @@ public class recursion{
         }
         return true;
     }
+    
     public static void solution(String str, String asf) {
         if(str.length() == 0){
             System.out.println(asf);
@@ -1380,6 +1391,7 @@ public class recursion{
         }
         return true;
     }
+    
     public static void solution(int[] arr, int indx,int sum , int k,int[] subsetSum,int ssf, ArrayList<ArrayList<Integer>> ans) {
         if(indx == arr.length){
             if(ssf == k){

@@ -11,6 +11,16 @@ class grapque{
             this.wt = wt;
         }
     }
+    public static class Edge1{
+        String nbr;
+        double wt;
+
+        public Edge1(String nbr,double wt){
+            this.nbr = nbr;
+            this.wt = wt;
+        }
+    }
+
     public static void addEdge(ArrayList<Edge>[] graph,int v1,int v2,int wt){
         graph[v1].add(new Edge(v2,wt));
         graph[v2].add(new Edge(v1,wt));
@@ -420,7 +430,7 @@ class grapque{
             }
         }
         return level;
-    }
+    }   
 
     // Mother Vertex
     // https://practice.geeksforgeeks.org/problems/mother-vertex/1
@@ -508,6 +518,467 @@ class grapque{
         }
         return -1;
     }
+
+
+
+    // Cycles
+    // 09/october/2021
+    
+    // Detect cycle in an undirected graph 
+    // https://practice.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1
+    // BFS+DFS both will work here
+
+    // BFS
+    public boolean isCycleUndirected_bfsutil(int v, ArrayList<ArrayList<Integer>> graph,boolean[] vis) {
+        Queue<Integer> qu = new LinkedList<>();
+        qu.add(v);
+        while(qu.size() > 0) {
+            int rem = qu.remove();
+            if(vis[rem] == true){
+                return true;
+            }else{
+                vis[rem] = true;
+            }
+            for(int nbr:graph.get(rem)) {
+                if(vis[nbr] == false){
+                    qu.add(nbr);
+                }
+            }
+        }
+        return false;
+    }
+    public boolean isCycleUndirected_bfs(int v, ArrayList<ArrayList<Integer>> graph) {
+        boolean[] vis = new boolean[v];
+        for(int i=0;i<v;i++){
+            if(vis[i] == false){
+                boolean res = isCycleUndirected_bfsutil(i,graph,vis);
+                if(res == true) return true;
+            }
+        }
+        return false;
+    }
+
+    // DFS
+    public boolean isCycleUndirected_dfsutil(int v, ArrayList<ArrayList<Integer>> graph,boolean[] vis,int parent) {
+        vis[v] = true;
+        for(int nbr:graph.get(v)){
+            if(vis[nbr] == false){
+                boolean rres = isCycleUndirected_dfsutil(nbr,graph,vis,v);
+                if(rres == true) return true;
+            }else if(vis[nbr] == true && nbr != parent){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean isCycleUndirected_dfs(int v, ArrayList<ArrayList<Integer>> graph) {
+        boolean[] vis = new boolean[v];
+        for(int i=0;i<v;i++){
+            if(vis[i] == false){
+                boolean res = isCycleUndirected_dfsutil(i,graph,vis,-1);
+                if(res == true) return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isCycle(int v, ArrayList<ArrayList<Integer>> graph) {
+        // boolean res = isCycleUndirected_bfs(v, graph);
+        boolean res = isCycleUndirected_dfs(v, graph);
+        return res;
+    }    
+    
+    
+    // Detect Cycle in a Directed Graph
+    // https://practice.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1
+    // DFS only works here
+    public boolean isCylicDFS(int v,ArrayList<ArrayList<Integer>> graph,boolean[] vis,boolean[] mypath){
+        vis[v] = true;  
+        mypath[v] = true;
+        for(int nbr:graph.get(v)){
+            if(vis[nbr] == false){
+                boolean rres = isCylicDFS(nbr,graph,vis,mypath);
+                if(rres == true) return true;
+            }else if(vis[nbr] == true && mypath[nbr] == true){
+                return true;
+            }
+        }
+        mypath[v] = false;
+        return false;
+    }
+    public boolean isCyclic(int v, ArrayList<ArrayList<Integer>> graph) {
+        boolean[] vis = new boolean[v];
+        boolean[] mypath = new boolean[v];
+        for(int i=0;i<v;i++){
+            if(vis[i] == false){
+                boolean res = isCylicDFS(i,graph,vis,mypath);
+                if(res == true) return true;
+            }
+        }
+        return false;
+    }
+
+    // 207. Course Schedule (kahn's Algo)
+    public boolean canFinish(int n, int[][] edges) {
+        // prepare graph
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+        for(int i=0;i<n;i++){
+            graph.add(new ArrayList<>());
+        }
+        for(int[] edge:edges){
+            graph.get(edge[0]).add(edge[1]);
+        }
+        // prepare indegree array from graph
+        int[] indegree = new int[n];
+        for(int i=0;i<n;i++){
+            for(int nbr:graph.get(i)){
+                indegree[nbr]++;
+            }
+        }
+        // add element in queue which have 0 indegree
+        Queue<Integer> qu = new LinkedList<>();
+        for(int i=0;i<n;i++){
+            if(indegree[i] == 0){
+                qu.add(i);
+            }
+        }
+        int count = 0;
+        while(qu.size() > 0){
+            // 1.get + remove;
+            int rem = qu.remove();
+            // 2. print
+            count++;
+            // 3.work (decrease indegree of nbr if indegree == 0 then add to queue)
+            for(int nbr:graph.get(rem)){
+                indegree[nbr]--;
+                if(indegree[nbr] == 0) qu.add(nbr);
+            }
+        }
+        return count == n;
+    }
+
+    // 210. Course Schedule II
+    public int[] findOrder(int n, int[][] edges) {
+        // prepare graph
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+        for(int i=0;i<n;i++){
+            graph.add(new ArrayList<>());
+        }
+        for(int[] edge:edges){
+            graph.get(edge[0]).add(edge[1]);
+        }
+        // prepare indegree array from graph
+        int[] indegree = new int[n];
+        for(int i=0;i<n;i++){
+            for(int nbr:graph.get(i)){
+                indegree[nbr]++;
+            }
+        }
+        // add element in queue which have 0 indegree
+        Queue<Integer> qu = new LinkedList<>();
+        for(int i=0;i<n;i++){
+            if(indegree[i] == 0){
+                qu.add(i);
+            }
+        }
+        int count = 0;
+        int indx = n-1;
+        int[] res = new int[n];
+        while(qu.size() > 0){
+            // 1.get + remove;
+            int rem = qu.remove();
+            // 2. print
+            res[indx] = rem;
+            indx--;
+            count++;
+            // 3.work (decrease indegree of nbr if indegree == 0 then add to queue)
+            for(int nbr:graph.get(rem)){
+                indegree[nbr]--;
+                if(indegree[nbr] == 0) qu.add(nbr);
+            }
+        }
+        if(count != n){
+            res = new int[0];
+            return res;
+        }
+        return res;
+    }
+
+    // 547. Number of Provinces
+    public void findCircleNumUtil_dfs(int[][] graph,int src,boolean[] vis){
+        vis[src] = true;
+        for(int nbr=0;nbr<graph.length;nbr++){
+            if(graph[src][nbr] == 1 && vis[nbr] == false){
+                findCircleNumUtil_dfs(graph, nbr, vis);
+            }
+        }   
+    }
+    public int findCircleNum(int[][] graph) {
+        int n = graph.length;
+        boolean[] vis  = new boolean[n];
+        int count = 0;
+        for(int v=0;v<n;v++){
+            if(vis[v] == false){
+                count++;
+                findCircleNumUtil_dfs(graph,v,vis);
+            }
+        }
+        return count;
+    }
+
+    // 399. Evaluate Division
+    public boolean pathCost(HashMap<String,ArrayList<Edge1>> graph ,String src,String dest,double csf,HashSet<String> vis,double[] res,int indx){
+        if(src.equals(dest)){
+            res[indx] = csf;
+            return true;
+        }
+        vis.add(src);
+        for(Edge1 e:graph.get(src)){
+            String nbr = e.nbr;
+            if(vis.contains(nbr) == false){
+                boolean rres = pathCost(graph,nbr,dest,csf*e.wt,vis,res,indx);
+                if(rres == true) return true;
+            }
+        }
+        return false;
+    }
+    
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        HashMap<String,ArrayList<Edge1>> graph = new HashMap<>();
+        int indx = 0;
+        for(List<String> equation:equations){
+            String u = equation.get(0);
+            String v = equation.get(1);
+            double wt = values[indx];
+            indx++;
+        
+            if(graph.containsKey(u)){
+                graph.get(u).add(new Edge1(v,wt));
+            }else{
+                ArrayList<Edge1> curr = new ArrayList<>();
+                curr.add(new Edge1(v,wt));
+                graph.put(u, curr);
+            }
+
+            if(graph.containsKey(v)){
+                graph.get(v).add(new Edge1(u,1.0 / wt));
+            }else{
+                ArrayList<Edge1> curr = new ArrayList<>();
+                curr.add(new Edge1(u,1.0 / wt));
+                graph.put(v, curr);
+            }
+        }
+        double[] res = new double[queries.size()];
+        indx = 0;
+        for(List<String> query : queries){
+            String u = query.get(0);
+            String v = query.get(1);
+
+            if(graph.containsKey(u) == false || graph.containsKey(v) == false){
+                res[indx] = -1.0;
+            } else if(u.equals(v) == true){
+                res[indx] = 1.0;
+            } else {
+                HashSet<String> vis = new HashSet<>();
+                boolean rres = pathCost(graph,u,v,1.0,vis,res,indx);
+                if(rres == false){
+                    res[indx] = -1.0;
+                }
+            }
+            indx++;
+        }
+        return res;
+    }
+
+    // Bellman Ford
+    public static int[] bellmanFord(int n,int[][] edges){
+        int[] path = new int[n];
+        Arrays.fill(path,Integer.MAX_VALUE);
+        path[0] = 0; // we are considering 0 as the source if source is there we put path[src] = 0; as src -> src is 0;
+        for(int i=0;i<n-1;i++){
+            for(int[] edge: edges){
+                int u = edge[0];
+                int v = edge[1];
+                int w = edge[2];
+                if(path[u] != Integer.MAX_VALUE && path[u] + w < path[v]){
+                    path[v] = path[u]+w;
+                }
+            }
+        }
+        return path;
+    }
+    // Scanner scn = new Scanner(System.in);
+    // int n = scn.nextInt();
+    // int m = scn.nextInt();
+    // int[][] edges = new int[m][3];
+    // for(int i = 0; i < m; i++) {
+    //     edges[i][0] = scn.nextInt()-1;
+    //     edges[i][1] = scn.nextInt()-1;
+    //     edges[i][2] = scn.nextInt();
+    // }
+    // int[] res = bellmanFord(n,edges);
+    // for(int i=1;i<res.length;i++){
+    //     System.out.print(res[i]+" ");
+    // }
+
+    // Negative Weight Cycle Detection (done using bellmanFord)
+    public static int isNegativeCyclePresent(int n,int[][] edges){
+        int[] path = new int[n];
+        Arrays.fill(path,Integer.MAX_VALUE);
+        path[0] = 0;
+        for(int i=0;i<n-1;i++){
+            for(int[] edge: edges){
+                int u = edge[0];
+                int v = edge[1];
+                int w = edge[2];
+                if(path[u] != Integer.MAX_VALUE && path[u] + w < path[v]){
+                    path[v] = path[u]+w;
+                }
+            }
+        }
+        for(int[] edge: edges){
+                int u = edge[0];
+                int v = edge[1];
+                int w = edge[2];
+                if(path[u] != Integer.MAX_VALUE && path[u] + w < path[v]){
+                   return 1;
+                }
+            }
+        return 0;
+    }
+    // Scanner scn = new Scanner(System.in);
+    // int n = scn.nextInt();
+    // int m = scn.nextInt();
+    // int[][] edges = new int[m][3];
+    // for(int i = 0; i < m; i++) {
+    //     edges[i][0] = scn.nextInt();
+    //     edges[i][1] = scn.nextInt();
+    //     edges[i][2] = scn.nextInt();
+    // }
+    // int res = isNegativeCyclePresent(n,edges);
+    // System.out.println(res);
+
+    // Remove Max Number Of Edges To Keep Graph Fully Traversable - (uses DSU)
+
+    //1034. Coloring A Border
+    //https://leetcode.com/problems/coloring-a-border/
+    public void colorBorderdfs(int[][] grid,int r,int c,boolean[][] vis){
+        int count = 0;
+        int val = grid[r][c];
+        grid[r][c] *= -1;
+        vis[r][c] = true;
+        for(int d=0;d<4;d++){
+            int rr = r+dirs[d][0];
+            int cc = c+dirs[d][1];
+            if(rr >= 0 && rr<grid.length && cc>=0 && cc<grid[0].length){
+                if(grid[rr][cc] == val || grid[rr][cc] == -val){
+                    count+=1;
+                }
+                if(grid[rr][cc] == val && vis[rr][cc] == false){
+                    colorBorderdfs(grid, rr, cc, vis);
+                }
+            }
+        }
+        if(count == 4){
+            grid[r][c] *= -1;
+        }
+    }
+    public int[][] colorBorder(int[][] grid, int row, int col, int color) {
+        int n = grid.length;
+        int m = grid[0].length;
+        boolean[][] vis = new boolean[n][m];
+        colorBorderdfs(grid,row,col,vis);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j] < 0){
+                    grid[i][j] = color;
+                }
+            }
+        }
+        return grid;
+    }
+    
+    //Minimum Swaps to Sort 
+    // https://practice.geeksforgeeks.org/problems/minimum-swaps/1
+    public class Pair implements Comparable<Pair> {
+        int val;
+        int idx;
+    
+        Pair(int val, int idx) {
+          this.val = val;
+          this.idx = idx;
+        }
+    
+        @Override
+        public int compareTo(Pair o) {
+          return this.val - o.val;
+        }
+    }
+    public int minSwaps(int nums[]){
+        Pair[] arr = new Pair[nums.length];
+        boolean[] vis = new boolean[nums.length];
+
+        for(int i=0;i<arr.length;i++){
+            arr[i] = new Pair(nums[i],i);
+        }
+        Arrays.sort(arr);
+        int ans = 0;
+
+        for(int i=0;i<arr.length;i++){
+            if(vis[i] == true || arr[i].idx == i) {
+                continue;
+            }
+            int clen = 0;
+            int j = i;
+            while(vis[j] == false){
+                vis[j] = true;
+                j = arr[j].idx;
+                clen++;
+            }
+            ans += clen-1;
+        }
+        return ans;
+    }
+    
+    //Euler circuit and Path 
+    //https://practice.geeksforgeeks.org/problems/euler-circuit-and-path/1
+    // public int isEularCircuitExist(int V, ArrayList<ArrayList<Integer>> adj) {
+        
+    // }
+
+    // https://leetcode.com/problems/reconstruct-itinerary/
+    public HashMap<String,PriorityQueue<String>> graph;
+    public LinkedList<String> ans;
+    public void dfsItinerary(String src){
+        PriorityQueue<String> nbrs = graph.get(src);
+        while(nbrs != null && nbrs.size() > 0){
+            String nbr = nbrs.remove();
+            dfsItinerary(nbr);
+        }
+        ans.addFirst(src);
+    }
+    public List<String> findItinerary(List<List<String>> tickets) {
+        graph = new HashMap<>();
+        ans = new LinkedList<>();
+
+        for(List<String> edge:tickets){
+            String u = edge.get(0);
+            String v = edge.get(1);
+            
+            if(graph.containsKey(u)){
+                graph.get(u).add(v);
+            }else{
+                PriorityQueue<String> pq1 = new PriorityQueue<>();
+                pq1.add(v);
+                graph.put(u, pq1);
+            }
+        }
+        dfsItinerary("JFK");
+        return ans;
+    }
+
+    // Pepcoder And Reversing (CODECHEF CHEF AND REVERSING)
+    
 
     public static void main(String[] args){
 

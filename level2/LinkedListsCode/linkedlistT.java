@@ -541,7 +541,7 @@ public class linkedlistT {
         return even_head.next;
 
     }
-    // Segregate 01 Node Of Linkedlist Over Swapping Nodes (pointers change)
+     // Segregate 01 Node Of Linkedlist Over Swapping Nodes (pointers change)
     public static ListNode segregate01(ListNode head) {
         ListNode zero_head = new ListNode(-1);
         ListNode t1 = zero_head;

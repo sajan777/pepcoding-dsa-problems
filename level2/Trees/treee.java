@@ -488,6 +488,7 @@ public class treee {
         serializeNArrayTreeUtil(root, sb);
         return sb.toString();
     }
+    
     public static Node deserializeNArrayTree(String str) {
         if(str.equals("null#")) return null;
         String[] data = str.split("#");
@@ -651,7 +652,7 @@ public class treee {
         Queue<vPair> qu = new LinkedList<>();
         qu.add(new vPair(root,Math.abs(minLH)));
         while(qu.size() > 0){
-            TreeNode rem = qu.remove();
+            vPair rem = qu.remove();
             res.get(rem.count).add(rem.node.val);
             if(rem.node.left != null){
                 qu.add(new vPair(rem.node.left,rem.count-1));
@@ -918,6 +919,7 @@ public class treee {
         Paths_Util(root.right, res, curr);
         curr.remove(curr.size()-1);
     }
+    
     public static ArrayList<ArrayList<Integer>> rootToAllLeafPath(TreeNode root){
         ArrayList<ArrayList<Integer>> res = new ArrayList<>();
         ArrayList<Integer> subres = new ArrayList<>();
@@ -936,6 +938,7 @@ public class treee {
         exactlyOneChildUtil(root.left,ans);
         exactlyOneChildUtil(root.right,ans);
     }
+    
     public static ArrayList<Integer> exactlyOneChild(TreeNode root) {
         ArrayList<Integer> ans = new ArrayList<>();
         exactlyOneChildUtil(root,ans);
@@ -1007,19 +1010,6 @@ public class treee {
         }
         return ans;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

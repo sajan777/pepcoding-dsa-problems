@@ -1,0 +1,72 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static class Edge{
+        int src;
+        int nbr;
+        int wt;
+        public Edge(int src,int nbr,int wt){
+            this.src = src;
+            this.nbr = nbr;
+            this.wt = wt;
+        }
+        
+    }
+    public static void addEdge(ArrayList<Edge>[] graph,int u,int v){
+        graph[u].add(new Edge(u,v,0));
+        graph[v].add(new Edge(v,u,1));
+    }
+    public static class Pair implements Comparable<Pair> {
+        int vtx;
+        int wsf;
+        
+        public Pair(int vtx,int wsf){
+            this.vtx = vtx;
+            this.wsf = wsf;
+        }
+        public int compareTo(Pair o){
+            return this.wsf - o.wsf;
+        }
+    }
+    
+    public static int dijkstras(ArrayList<Edge>[] graph,int dest){
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        pq.add(new Pair(1,0));
+        boolean[]  vis = new boolean[graph.length];   
+        while(pq.size() > 0){
+            Pair rem = pq.remove();
+            if(vis[rem.vtx] == true){
+                continue;
+            }
+            vis[rem.vtx] = true;
+            if(rem.vtx == dest){
+                return rem.wsf;
+            }
+            for(Edge e: graph[rem.vtx]){
+                int nbr = e.nbr;
+                if(vis[nbr] == false){
+                    pq.add(new Pair(nbr,rem.wsf+e.wt));
+                }
+            }
+        }
+        return -1;
+    }
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		Scanner scn = new Scanner(System.in);
+		int vertex = scn.nextInt();
+		int edges = scn.nextInt();
+		ArrayList<Edge>[] graph = new ArrayList[vertex+1];
+		for(int i=0;i<vertex+1;i++){
+		    graph[i] = new ArrayList<>();
+		}
+		for(int i =0;i<edges;i++){
+		    int u = scn.nextInt();
+		    int v = scn.nextInt();
+		    addEdge(graph,u,v);
+		}
+		
+		System.out.println(dijkstras(graph,vertex));
+	}
+}
