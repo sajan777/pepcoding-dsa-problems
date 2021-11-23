@@ -307,7 +307,7 @@ public class treee {
     TreeNode prev1 = null;
     public boolean isValidBST(TreeNode root) {
         if(root == null) return true;
-
+        
         boolean lres = isValidBST(root.left);
         if(lres == false) return false;
         // Inside inorder
