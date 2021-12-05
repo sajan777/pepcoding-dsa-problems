@@ -21,7 +21,6 @@ public class stackQue {
         while(st.size()>0){
             ans[st.pop()] = -1;
         } 
-         
        return ans;
     }
     // ngr2 Leetcode Approach 1

@@ -1124,7 +1124,6 @@ public class treee {
 
         maxSum = Math.max(maxSum,lsum+rsum+root.data);
         return Math.max(lsum, rsum)+root.data;
-
     }
     int maxPathSum(Node root){ 
         maxSum = 0;
@@ -1334,6 +1333,7 @@ public class treee {
         }
         boolean rres = hasPathSum_Util(root.left,target,ssf+root.val) || hasPathSum_Util(root.right,target,ssf+root.val);
         return rres;
+
     }
     public static boolean hasPathSum(TreeNode root, int targetSum) {
         boolean res = hasPathSum_Util(root,targetSum,0);
@@ -1341,7 +1341,7 @@ public class treee {
     }
 
     // Lowest Common Ancestor Of A Binary Tree
-    static TreeNode lca = null;
+    static TreeNode lca = null;`
     public boolean solveLCA(TreeNode root,TreeNode data1,TreeNode data2){
         if(root == null) return false;
         // self check
