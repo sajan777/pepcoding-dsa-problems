@@ -458,6 +458,106 @@ public class stacksque {
         return true;
     }
 
+    // Pending questions (9/12/2021)
+    
+    // https://classroom.pepcoding.com/the-switch-program-2/122/classvideos/6328
+
+    // 636. Exclusive Time of Functions
+    // https://leetcode.com/problems/exclusive-time-of-functions/
+    
+    // 456. 132 Pattern
+    // https://leetcode.com/problems/132-pattern/    
+
+    // 735. Asteroid Collision
+    // https://leetcode.com/problems/asteroid-collision/
+    public int[] asteroidCollision(int[] asteroids) {
+        Stack<Integer> st = new Stack<>();
+        for(int val:asteroids){
+            if(val > 0){
+                st.push(val);
+                continue;
+            }
+            // peek is +ve and smaller then -val in term of size.;
+            while(st.size() > 0 && st.peek() < -val && st.peek() > 0 ){
+                st.pop();
+            }
+            // equal in size but opposite in directions
+            if(st.size() > 0 && st.peek() == -val){
+                st.pop();
+            }else if(st.size() == 0 || st.peek() < 0){
+                st.push(val);
+            }
+        }
+        int[] res = new int[st.size()];
+        for(int i=res.length-1;i>=0;i--){
+            res[i] = st.pop();
+        }        
+        return res;
+    }
+    
+
+    // 402. Remove K Digits
+    // https://leetcode.com/problems/remove-k-digits/
+    public String removeKdigits(String num, int k) {
+        // Use linkedlist as stack (to remove leading zeroes)
+        LinkedList<Character> st = new LinkedList<>();
+        for(int i=0;i<num.length();i++){
+            char ch = num.charAt(i);
+            while(k >0 &&st.size()>0 && st.getLast() > ch){
+                k--;
+                st.removeLast();
+            }
+            st.addLast(ch);
+        }
+        // manage remaining k's
+        while(k > 0){
+            st.removeLast();
+            k--;
+        }
+        // manage leading zeroes
+        while(st.size() > 0 && st.getFirst() == '0'){
+            st.removeFirst();
+        }
+        StringBuilder str = new StringBuilder();
+        for(char ch:st){
+            str.append(ch);
+        }
+        return str.length() == 0 ? "0" : str.toString();
+    }
+    
+    // 316. Remove Duplicate Letters
+    // https://leetcode.com/problems/remove-duplicate-letters/
+    public String removeDuplicateLetters(String s) {
+        HashMap<Character,Integer> fmap = new HashMap<>(); //frequency
+        HashMap<Character,Boolean> pmap = new HashMap<>(); //presence in stack
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            pmap.put(ch, false);
+            int of = fmap.getOrDefault(ch, 0);
+            fmap.put(ch,of+1);
+        }
+
+        LinkedList<Character> st = new LinkedList<>();
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            fmap.put(ch, fmap.get(ch)-1);
+            if(pmap.get(ch) == true){
+                continue;
+            }
+            while(st.size() > 0 && st.getLast() > ch && fmap.get(st.getLast()) > 0){
+                char removedChar = st.removeLast();
+                pmap.put(removedChar, false);
+            }
+            st.addLast(ch);
+            pmap.put(ch, true);
+        }
+
+        StringBuilder str = new StringBuilder();
+        for(char ch:st){
+            str.append(ch);
+        }
+        return str.toString();
+    }
 
     public static void main(String[] args) {
         
