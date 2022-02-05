@@ -454,7 +454,6 @@ public class graphQue{
     }
 
     public static boolean isGraphBipartiteBFS(ArrayList<Edge>[] graph,int src,int[] vis){
-
         Queue<BPair> qu = new LinkedList<>();
         qu.add(new BPair(src, 0));                  
         while(qu.size() > 0){
@@ -463,7 +462,7 @@ public class graphQue{
                 // already discovered
 
                 //1. if same level discover continue beacuase even size cycle is there and can be splitted
-                // 2.if discovered with diff level return false because of odd size cycle is present in graph
+                //2. if discovered with diff level return false because of odd size cycle is present in graph
                 if(vis[rem.vtx] == rem.dtime) 
                     continue;
                 else return false;
@@ -586,7 +585,7 @@ public class graphQue{
 
         PriorityQueue<primsHelper> pq = new PriorityQueue<>();
         // we can start from any vertex pq.add(new primsHelper(3, -1, 0));
-        pq.add(new primsHelper(0, -1, 0));
+        pq.add(new primsHelper(0, -1, 0)) ;
         
         int n = graph.length;
         boolean[] vis = new boolean[n];

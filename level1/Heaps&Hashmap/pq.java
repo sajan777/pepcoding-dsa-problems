@@ -15,6 +15,7 @@ class priority{
         data = new ArrayList<>();
         this.flag = flag;
     }
+    
     private void processArray(int[] arr){
         // COMPLEXITY GREATER THEN 0(NLOGN)
         // for(int i=0;i<arr.length;i++){

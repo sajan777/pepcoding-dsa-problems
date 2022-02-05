@@ -4,7 +4,41 @@ import java.util.Scanner;
 
 public class stackQue {
     
+    public static boolean isBalanced(String str){
+        Stack<Character> st = new Stack<>();
+        for(int i =0 ;i<str.length();i++){
+            char ch = str.charAt(i);
+            if(ch == ')'){
+                if(st.size()>0 && st.peek() == '(' ){
+                    st.pop();
+                }else{
+                    return false;
+                }
+            }else if(ch == ']'){
+                if(st.size()>0 && st.peek() == '['){
+                    st.pop();
+                }else{
+                    return false;
+                }
+            }else if(ch == '}'){
+                if(st.size()>0 && st.peek() == '{'){
+                    st.pop();
+                }else{
+                    return false;
+                }
+            }
+            if(ch =='[' || ch == '(' || ch == '{'){
+                st.push(ch);
+            }
+        }
+        
+        if(st.size() == 0){
+            return true;
+        }else{
+            return false;
+        }
 
+    }
     // ngr next Greater on Right
     public static int[] ngr(int[] arr){
         int n = arr.length;
