@@ -1238,7 +1238,7 @@ public class treee {
         return res;
     }
 
-    // 662. Maximum Width of Binary Tree https://leetcode.com/problems/maximum-width-of-binary-tree/
+    // 662. Maximum Width of Binary Tree https:/z/leetcode.com/problems/maximum-width-of-binary-tree/
     private class WPair{
         TreeNode node;
         int indx;
@@ -1341,7 +1341,7 @@ public class treee {
     }
 
     // Lowest Common Ancestor Of A Binary Tree
-    static TreeNode lca = null;`
+    static TreeNode lca = null;
     public boolean solveLCA(TreeNode root,TreeNode data1,TreeNode data2){
         if(root == null) return false;
         // self check
