@@ -1,0 +1,66 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto';
+}
+.body {
+    background-image: url('./assets/space.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+}
+.level {
+    padding: 15px;
+    height: 200px;
+    align-items: center;
+    display: flex;
+}
+.level h4 {
+    color: #fff;
+}
+.up,.down {
+    font-size: 16px;
+    padding: 4px;
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+}
+.leveloperatorswrap {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    margin-right: 200px;
+}
+.liftswrap {
+    flex-grow: 1;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+.lift{
+    transition: transform 4s linear 0s;
+    transform: translateY(0px);
+}
+.level-heading {
+    margin-right: 16px;
+    border: 2px solid cornflowerblue;
+    border-radius: 5px;
+    background-color: cornflowerblue;
+    padding: 10px;
+    font-size: 20px;
+    line-height: 25px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    letter-spacing: 1px;
+}
+.simulation-container {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    right: 30px;
+    top: 30px;
+}
