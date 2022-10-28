@@ -515,6 +515,28 @@ class questions {
         }
         return dp[n];
     }
+    //https://practice.geeksforgeeks.org/problems/rod-cutting0840/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+    // O(n2) + O(n)
+    public int cutRod(int price[], int n) {
+        int[] prices = new int[n+1];
+        for(int i=0;i<n;i++){
+            prices[i+1] = price[i];
+        }
+        int[] dp = new int[n+1];
+        dp[0] = 0;
+        dp[1] = prices[1];
+        for(int i=2;i<dp.length;i++){
+            dp[i] = prices[i];
+            int lo = 1;
+            int hi = i-1;
+            while(lo <= hi){
+                dp[i] = Math.max(dp[i],dp[lo]+dp[hi]);
+                lo++;
+                hi--;
+            }
+        }
+        return dp[dp.length-1];
+    }
 
     public static void main(String[] args) {
 
